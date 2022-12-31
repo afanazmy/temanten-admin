@@ -1,0 +1,6 @@
+{
+  "diffEditor.wordWrap": "off",
+  "editor.formatOnSave": true,
+  "typescript.validate.enable": false,
+  "prettier.tabWidth": 2
+}
