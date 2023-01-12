@@ -1,8 +1,8 @@
 import { useIntl } from 'react-intl';
 import { getPossibleRoute } from 'helpers';
 import { useEffect, useState } from 'react';
-import { useMount, useSetState, useTitle } from 'ahooks';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useCreation, useMemoizedFn, useMount, useSetState, useTitle } from 'ahooks';
 
 import { useAppProvider } from './appHook';
 
@@ -39,11 +39,11 @@ export const usePage = ({ title, activeMenu, openKeys } = {}) => {
    *
    * @param {UpdatePage} param
    */
-  const updatePage = ({ title, activeMenu, openKeys } = {}) => {
+  const updatePage = useMemoizedFn(({ title, activeMenu, openKeys } = {}) => {
     _setTitle(title);
     document.title = formatMessage({ id: _title, defaultMessage: _title });
     setApp({ title, activeMenu, openKeys });
-  };
+  });
 
   return { updatePage };
 };
@@ -80,11 +80,11 @@ export const useSpace = ({ title, activeSpaceKey, activeSpaceMenu, setFunctionKe
    *
    * @param {UpdateSpace} param
    */
-  const updateSpace = ({ title, activeSpaceMenu }) => {
+  const updateSpace = useMemoizedFn(({ title, activeSpaceMenu }) => {
     _setTitle(title);
     document.title = formatMessage({ id: _title, defaultMessage: _title });
     space?.[setFunctionKey]?.({ [activeSpaceKey]: activeSpaceMenu });
-  };
+  });
 
   return { updateSpace };
 };
@@ -101,7 +101,6 @@ export const useSpace = ({ title, activeSpaceKey, activeSpaceMenu, setFunctionKe
 export const useSubModule = ({ initialValues, getMenus, parentPath, activeMenuKey } = {}) => {
   const [state, setState] = useSetState({ ...initialValues });
   const [_activeMenu, _setActiveMenu] = useState();
-  const [menuItems, setMenuItems] = useState([]);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -110,17 +109,18 @@ export const useSubModule = ({ initialValues, getMenus, parentPath, activeMenuKe
   const { permissions } = app?.user || {};
 
   const activeMenu = state?.[activeMenuKey];
+  const menuItems = useCreation(() => {
+    if (!user) return [];
+    return getMenus?.({ user, parentPath }) || [];
+  }, [user, parentPath]);
 
   useEffect(() => {
-    if (!user) return;
-    setMenuItems(getMenus?.({ user, parentPath }) || []);
-
     const isIndex = location.pathname === parentPath;
     if (!isIndex) return;
 
     const possibleRoute = getPossibleRoute(permissions || [], parentPath);
     if (possibleRoute) navigate(possibleRoute);
-  }, [user, permissions, parentPath, location, navigate, getMenus]);
+  }, [permissions, parentPath, location, navigate]);
 
   /**
    * Karena ada issue ketika langsung ambil value dari context
@@ -130,5 +130,5 @@ export const useSubModule = ({ initialValues, getMenus, parentPath, activeMenuKe
     _setActiveMenu(activeMenu);
   }, [activeMenu]);
 
-  return { state, setState, activeMenu: _activeMenu, setActiveMenu: _setActiveMenu, menuItems, setMenuItems };
+  return { state, setState, activeMenu: _activeMenu, setActiveMenu: _setActiveMenu, menuItems };
 };

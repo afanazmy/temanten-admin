@@ -21,10 +21,10 @@ export const interceptors = {
   request: {
     /** @param {import('axios').AxiosRequestConfig} config */
     onSuccess: (config) => {
-      config.headers.common.Accept = 'application/json';
+      config.headers.common['Accept'] = 'application/json';
 
       // remove empty request
-      for (const key of Object.keys(config.params)) {
+      for (const key of Object.keys(config.params || {})) {
         if (config.params?.[key] === '') {
           delete config.params?.[key];
         }
@@ -33,7 +33,7 @@ export const interceptors = {
       let token = getToken();
       if (!token) return config;
 
-      config.headers.common.Authorization = token;
+      config.headers.common['Authorization'] = token;
 
       return config;
     },

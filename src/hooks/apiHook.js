@@ -2,10 +2,10 @@ import axios from 'axios';
 import { message } from 'antd';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
-import { useRequest, useSetState } from 'ahooks';
 import { apiBaseUrl, interceptors } from 'utils';
 import { useEffect, useRef, useState } from 'react';
 import { deleteEmptyRequest, getParamsOrder } from 'helpers';
+import { useCreation, useMemoizedFn, useRequest, useSetState } from 'ahooks';
 
 /**
  * @typedef {"get" | "post" | "postForm" | "put" | "putForm" | "patch" | "patchForm" | "delete"} Method
@@ -17,15 +17,19 @@ export const useAPI = (endpoint, config = {}) => {
   const navigate = useNavigate();
   const { formatMessage } = useIntl();
 
-  const instance = axios.create(config);
-  instance.defaults.baseURL = apiBaseUrl(config.baseURL);
+  const instance = useCreation(() => {
+    const instance = axios.create(config);
+    instance.defaults.baseURL = apiBaseUrl(config.baseURL);
 
-  instance.interceptors.request.use(interceptors.request.onSuccess, interceptors.request.onError);
+    instance.interceptors.request.use(interceptors.request.onSuccess, interceptors.request.onError);
 
-  instance.interceptors.response.use(
-    (response) => interceptors.response.onSuccess(response, { raw, showMessage, intl: formatMessage }),
-    (error) => interceptors.response.onError(error, { intl: formatMessage, navigate }),
-  );
+    instance.interceptors.response.use(
+      (response) => interceptors.response.onSuccess(response, { raw, showMessage, intl: formatMessage }),
+      (error) => interceptors.response.onError(error, { intl: formatMessage, navigate }),
+    );
+
+    return instance;
+  }, [config]);
 
   const method = config.method || 'get';
   const onlyTwoParams = method === 'get' || method === 'delete';
@@ -35,13 +39,13 @@ export const useAPI = (endpoint, config = {}) => {
    * @param {import('axios').AxiosRequestConfig} _config override default config on API call
    * @returns
    */
-  const request = (params, _config = {}) => {
+  const request = useMemoizedFn((params, _config = {}) => {
     return instance?.[method]?.(
       _config?.url || endpoint || config?.url,
       onlyTwoParams ? { ...config, ..._config, params } : params,
       { ...config, ..._config },
     );
-  };
+  });
 
   return request;
 };
@@ -74,9 +78,9 @@ export const useTable = (service, options, plugins) => {
     setTable({ currentPage: param.page });
   }, [param.page, table.currentPage, setTable]);
 
-  const run = (params = {}) => _run({ ...param, ...params, page: params?.page || 1 });
+  const run = useMemoizedFn((params = {}) => _run({ ...param, ...params, page: params?.page || 1 }));
 
-  const onTableChange = ({ pageSize, current }, _f, sort, { action }) => {
+  const onTableChange = useMemoizedFn(({ pageSize, current }, _f, sort, { action }) => {
     let _sorts;
     const isSort = action === 'sort';
     const isArray = Array.isArray(sort);
@@ -87,36 +91,32 @@ export const useTable = (service, options, plugins) => {
 
     setTable({ currentPage: current, sorts: _sorts || table.sorts, pageSize });
     run({ ...param, page: current, sorts: _sorts || table.sorts, pagination: pageSize });
-  };
+  });
 
   /** untuk men-trigger supaya form filter nya disubmit */
-  const onFilter = () => form?.submit?.();
+  const onFilter = useMemoizedFn(() => form?.submit?.());
 
   /** callback `onFinish` yang digunakan di form filternya */
-  const onFinishFilter = (data = {}) => {
+  const onFinishFilter = useMemoizedFn((data = {}) => {
     deleteEmptyRequest(data);
     const { query, ...rest } = data;
     const noOtherRequest = !Object.keys(rest)?.length;
     if (!query && noOtherRequest) return run({ search: null, page: 1 });
     return run({ search: { ...data }, page: 1 });
-  };
+  });
 
-  const onResetFilter = () => run({ search: null, page: 1 });
+  const onResetFilter = useMemoizedFn(() => run({ search: null, page: 1 }));
 
   /** untuk button reload */
   const onReload = rest.refresh;
 
-  return {
-    ...rest,
-    run,
-    data,
-    onFilter,
-    onReload,
-    onResetFilter,
-    onFinishFilter,
-    sorts: table.sorts,
-    params: [{ ...param, pagination: paginate ? param?.pagination || data?.result?.perPage : undefined }],
-    tableProps: {
+  const _params = useCreation(
+    () => [{ ...param, pagination: paginate ? param?.pagination || data?.result?.perPage : undefined }],
+    [JSON.stringify(param), param?.pagination, data?.result?.perPage],
+  );
+
+  const tableProps = useCreation(
+    () => ({
       loading: rest.loading,
       dataSource: data?.result?.data,
       onChange: onTableChange,
@@ -129,7 +129,28 @@ export const useTable = (service, options, plugins) => {
             pageSizeOptions: [10, 20, 50, 100],
           }
         : false,
-    },
+    }),
+    [
+      paginate,
+      rest.loading,
+      table?.currentPage,
+      data?.result?.total,
+      data?.result?.perPage,
+      JSON.stringify(data?.result?.data),
+    ],
+  );
+
+  return {
+    ...rest,
+    run,
+    data,
+    onFilter,
+    onReload,
+    onResetFilter,
+    onFinishFilter,
+    sorts: table.sorts,
+    params: _params,
+    tableProps,
   };
 };
 
@@ -150,9 +171,11 @@ export const useStore = ({ open, form, service, actions, onSuccessAdd, onCancel 
   useEffect(() => (open ? form?.resetFields?.() : undefined), [form, open]);
 
   // menghindari glitch/blink modal close
-  const _onSuccessAdd = (response, request) => setTimeout(() => onSuccessAdd(response || {}, request), 500);
+  const _onSuccessAdd = useMemoizedFn((response, request) =>
+    setTimeout(() => onSuccessAdd(response || {}, request), 500),
+  );
 
-  const onFinish = async (data) => {
+  const onFinish = useMemoizedFn(async (data) => {
     try {
       const response = await postData(data);
       onCancel?.();
@@ -160,9 +183,9 @@ export const useStore = ({ open, form, service, actions, onSuccessAdd, onCancel 
     } catch (error) {
       console.error(error);
     }
-  };
+  });
 
-  const onFinishAndNew = async (data) => {
+  const onFinishAndNew = useMemoizedFn(async (data) => {
     try {
       const response = await postData(data);
       form?.resetFields?.();
@@ -170,9 +193,9 @@ export const useStore = ({ open, form, service, actions, onSuccessAdd, onCancel 
     } catch (error) {
       console.error(error);
     }
-  };
+  });
 
-  const onSaveClick = (data) => {
+  const onSaveClick = useMemoizedFn((data) => {
     let callbacks = { save: onFinish, saveAndNew: onFinishAndNew };
 
     actions?.map?.((action) => {
@@ -182,14 +205,14 @@ export const useStore = ({ open, form, service, actions, onSuccessAdd, onCancel 
     });
 
     return callbacks?.[callback.current]?.(data);
-  };
+  });
 
-  const onMenuClick = ({ key }) => {
+  const onMenuClick = useMemoizedFn(({ key }) => {
     callback.current = key;
     form?.submit?.();
-  };
+  });
 
-  const _onFinish = (data) => onSaveClick(data);
+  const _onFinish = useMemoizedFn((data) => onSaveClick(data));
 
   return { loading, onMenuClick, error, onFinish: _onFinish };
 };
@@ -236,13 +259,13 @@ export const useUpdate = ({ id, open, form, onClose, getService, putService, act
     getData();
   }, [open, id, getData]);
 
-  const onFinish = (data) => {
+  const onFinish = useMemoizedFn((data) => {
     if (form?.isFieldsTouched()) return putData(data);
     message.info(formatMessage({ id: 'No changes to save' }));
     onClose?.();
-  };
+  });
 
-  const onSaveClick = (data) => {
+  const onSaveClick = useMemoizedFn((data) => {
     let callbacks = { save: onFinish };
 
     actions?.map?.((action) => {
@@ -252,14 +275,14 @@ export const useUpdate = ({ id, open, form, onClose, getService, putService, act
     });
 
     return callbacks?.[callback?.current]?.(data, { getRefresh, getRefreshAsync });
-  };
+  });
 
-  const onMenuClick = ({ key }) => {
+  const onMenuClick = useMemoizedFn(({ key }) => {
     callback.current = key;
     form?.submit?.();
-  };
+  });
 
-  const _onFinish = (data) => onSaveClick(data);
+  const _onFinish = useMemoizedFn((data) => onSaveClick(data));
 
   return { loadingSubmit, loading, data, error, onFinish: _onFinish, onMenuClick, getRefresh, getRefreshAsync };
 };

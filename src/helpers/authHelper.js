@@ -10,8 +10,6 @@ export const removeToken = () => {
   LocalStorage.removeItem(storageKey.accessToken);
 };
 
-export const removeSelectedDatabase = () => LocalStorage.removeItem(storageKey.selectedDatabase);
-
 export const removeDataForLogout = () => {
   removeToken();
 };

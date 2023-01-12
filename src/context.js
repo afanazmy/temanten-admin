@@ -13,5 +13,5 @@ export const initialContextValues = {
   setApp: (app) => {},
 };
 
-export const AppContext = createContext(initialContextValues.app);
+export const AppContext = createContext(initialContextValues);
 export const AppProvider = AppContext.Provider;
