@@ -1,6 +1,8 @@
 export const enUSCommonLocale = {
   'common.Success': 'Success',
   'common.Error': 'Error',
+  'common.Invalid': 'Invalid',
+  'common.Required': 'Required',
   'common.Not Found': 'Not Found',
   'common.Back Home': 'Back Home',
   'common.Unauthorized access': 'Unauthorized access',
@@ -13,4 +15,13 @@ export const enUSCommonLocale = {
   'common.Copy server response': 'Copy server response',
   'common.Show more': 'Show more',
   'common.Add {name} details': 'Add {name} details',
+  'common.Username': 'Username',
+  'common.Password': 'Password',
+  'common.Confirm Password': 'Confirm Password',
+  'common.Save': 'Save',
+  'common.Previous': 'Previous',
+  'common.Next': 'Next',
+  'common.Back': 'Back',
+  'common.Continue': 'Continue',
+  'common.Dashboard': 'Dashboard',
 };

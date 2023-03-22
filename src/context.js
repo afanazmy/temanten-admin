@@ -5,6 +5,7 @@ import { LocalStorage, storageKey } from 'utils';
 export const initialContextValues = {
   app: {
     user: null,
+    theme: 'light',
     language: LocalStorage.getItem(storageKey.language, appConfig.defaultLanguage),
     title: null,
     activeMenu: null,

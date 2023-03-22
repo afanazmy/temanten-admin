@@ -1,6 +1,11 @@
 import lodash from 'lodash';
 import { FormattedMessage } from 'components';
 
+/**
+ * @typedef {Object} CustomValidation
+ * @property {import('components').IIntlShape['formatMessage']} formatMessage
+ */
+
 export const validation = {
   required: () => ({
     required: true,
@@ -20,10 +25,8 @@ export const validation = {
   }),
 
   /**
-   * @typedef {Object} Percentage
-   * @property {import('components').IIntlShape['formatMessage']} formatMessage
    *
-   * @param {Percentage} param
+   * @param {CustomValidation} param
    */
   percentage: ({ formatMessage }) => ({
     validator: (_, value) => {
@@ -33,6 +36,21 @@ export const validation = {
       if (rounding < 0) return Promise.reject(`${formatMessage?.({ id: 'common.Min' })}: 0`);
 
       return Promise.resolve();
+    },
+  }),
+
+  /**
+   * @typedef {Object} Confirmation
+   * @property {import('components/Intl/FormattedMessage').IFormattedMessage['id']} id
+   * @property {import('antd/es/form/interface').NamePath} fieldName
+   *
+   * @param {CustomValidation & Confirmation & import('antd').FormInstance} param
+   * @returns
+   */
+  confirmation: ({ id, formatMessage, fieldName, getFieldValue }) => ({
+    validator: (_, value) => {
+      if (!value || getFieldValue(fieldName) === value) return Promise.resolve();
+      return Promise.reject(`${formatMessage?.({ id: id || 'common.Invalid' })}`);
     },
   }),
 };

@@ -1,6 +1,8 @@
 export const idIDCommonLocale = {
   'common.Success': 'Berhasil',
   'common.Error': 'Error',
+  'common.Invalid': 'Tidak valid',
+  'common.Required': 'Wajib',
   'common.Not Found': 'Tidak Ditemukan',
   'common.Back Home': 'Kembali ke Beranda',
   'common.Unauthorized access': 'Akses yang tidak sah',
@@ -13,4 +15,13 @@ export const idIDCommonLocale = {
   'common.Copy server response': 'Salin respon server',
   'common.Show more': 'Lihat lebih banyak',
   'common.Add {name} details': 'Tambahkan detail {name}',
+  'common.Username': 'Username',
+  'common.Password': 'Password',
+  'common.Confirm Password': 'Konfirmasi Password',
+  'common.Save': 'Simpan',
+  'common.Previous': 'Sebelumnya',
+  'common.Next': 'Selanjutnya',
+  'common.Back': 'Kembali',
+  'common.Continue': 'Lanjutkan',
+  'common.Dashboard': 'Beranda',
 };
