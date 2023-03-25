@@ -5,6 +5,7 @@ import { enUSSignInLocale } from 'containers/SignIn/signIn.locale';
 import { enUSMasterLayoutLocale } from 'containers/MasterLayout/masterLayout.locale';
 import { enUSLoadUserDataLocale } from 'containers/LoadUserData/loadUserData.locale';
 import { enUSDashboardLocale } from 'containers/Dashboard/dashboard.locale';
+import { enUSUserLocale } from 'containers/User/user.locale';
 
 const EnLang = {
   messages: {
@@ -15,6 +16,7 @@ const EnLang = {
     ...enUSMasterLayoutLocale,
     ...enUSLoadUserDataLocale,
     ...enUSDashboardLocale,
+    ...enUSUserLocale,
   },
   antd: antdEn,
   locale: 'en-US',

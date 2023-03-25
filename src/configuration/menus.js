@@ -2,7 +2,7 @@ import Icon from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { paths, permissions } from 'routes';
 import { FormattedMessage } from 'components';
-import { Gauge } from 'assets';
+import { Gauge, User } from 'assets';
 
 /**
  * @typedef {{
@@ -40,6 +40,15 @@ export const sidebarMenus = ({ user } = {}) => {
         </Link>
       ),
       icon: <Icon component={Gauge} />,
+    },
+    {
+      key: paths.user,
+      label: (
+        <Link to={paths.user}>
+          <FormattedMessage id="user.User" />
+        </Link>
+      ),
+      icon: <Icon component={User} />,
     },
   ];
 

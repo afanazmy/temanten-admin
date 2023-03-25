@@ -44,7 +44,14 @@ export const getPossibleRoute = (userPermissions, rootPath = paths.home) => {
   let rootRoute = getRootPath();
 
   for (const route of rootRoute.children) {
-    const { permission, permissions, path } = route;
+    const { permission, permissions, path, index } = route;
+    const dontHavePermission = !permission && !Array.isArray(permissions) && !index;
+
+    if (dontHavePermission) {
+      redirectPath = path;
+      break;
+    }
+
     let usingChildPermission = false;
 
     // jika route memiliki multiple permission dan user memimiliki salah satu permission yang ada di route tersebut

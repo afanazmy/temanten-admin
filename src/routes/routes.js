@@ -2,7 +2,6 @@ import React from 'react';
 import { Loadable, PrivateRoute, PublicRoute } from 'components';
 
 import paths from './paths';
-import permissions from './permissions';
 
 const NotFound = React.lazy(() => import('components/NotFound/NotFound'));
 const Unauthorized = React.lazy(() => import('components/Unauthorized/Unauthorized'));
@@ -10,6 +9,7 @@ const SignIn = React.lazy(() => import('containers/SignIn/SignInPage'));
 const MasterLayout = React.lazy(() => import('containers/MasterLayout/MasterLayoutPage'));
 const LoadUserData = React.lazy(() => import('containers/LoadUserData/LoadUserDataPage'));
 const Dashboard = React.lazy(() => import('containers/Dashboard/DashboardPage'));
+const User = React.lazy(() => import('containers/User/UserPage'));
 
 /**
  * @type {Array.<import('react-router-dom').RouteObject>}
@@ -60,11 +60,21 @@ const routes = [
 
       {
         path: paths.dashboard,
-        permission: permissions.Dashboard,
         element: (
-          <PrivateRoute permission={permissions.Dashboard}>
+          <PrivateRoute>
             <Loadable>
               <Dashboard />
+            </Loadable>
+          </PrivateRoute>
+        ),
+      },
+
+      {
+        path: paths.user,
+        element: (
+          <PrivateRoute>
+            <Loadable>
+              <User />
             </Loadable>
           </PrivateRoute>
         ),

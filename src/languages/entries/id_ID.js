@@ -5,6 +5,7 @@ import { idIDSignInLocale } from 'containers/SignIn/signIn.locale';
 import { idIDMasterLayoutLocale } from 'containers/MasterLayout/masterLayout.locale';
 import { idIDLoadUserDataLocale } from 'containers/LoadUserData/loadUserData.locale';
 import { idIDDashboardLocale } from 'containers/Dashboard/dashboard.locale';
+import { idIDUserLocale } from 'containers/User/user.locale';
 
 const IdLang = {
   messages: {
@@ -15,6 +16,7 @@ const IdLang = {
     ...idIDMasterLayoutLocale,
     ...idIDLoadUserDataLocale,
     ...idIDDashboardLocale,
+    ...idIDUserLocale,
   },
   antd: antdId,
   locale: 'idID',

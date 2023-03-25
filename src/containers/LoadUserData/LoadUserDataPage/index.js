@@ -10,7 +10,6 @@ const LoadUserData = () => {
   const { permissions } = app?.user || {};
 
   const possibleRoute = useCreation(() => getPossibleRoute(permissions || []), [permissions]);
-  console.log(possibleRoute);
 
   if (!possibleRoute) {
     return (

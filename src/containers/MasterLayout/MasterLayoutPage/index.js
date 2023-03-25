@@ -1,12 +1,14 @@
 import { envs } from 'utils';
+import { imgPaths } from 'assets';
 import { useCreation } from 'ahooks';
 import { useAppProvider } from 'hooks';
 import { Outlet } from 'react-router-dom';
 import { sidebarMenus } from 'configuration';
 import { FormattedMessage } from 'react-intl';
-import { Avatar, Breadcrumb, Layout, Menu, Result, theme, Typography } from 'antd';
-import { useMasterLayoutController } from '../masterLayout.function';
 import { LoadingOutlined } from '@ant-design/icons';
+import { Avatar, Breadcrumb, Layout, Menu, Result, theme, Typography } from 'antd';
+
+import { useMasterLayoutController } from '../masterLayout.function';
 
 const { Text } = Typography;
 const { Sider, Content, Header } = Layout;
@@ -40,6 +42,7 @@ const MasterLayoutPage = () => {
     <Layout className="master-layout">
       <Sider theme="light" trigger={null} collapsible collapsed={false}>
         <div className="logo">
+          <img alt="temanten-logo" src={imgPaths.images.logo} />
           <Text strong>{envs('REACT_APP_APP_NAME')}</Text>
         </div>
 
