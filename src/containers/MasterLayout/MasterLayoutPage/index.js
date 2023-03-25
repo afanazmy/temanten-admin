@@ -1,32 +1,32 @@
-import { useRef } from 'react';
-import { useRequest } from 'ahooks';
-import classNames from 'classnames';
+import { envs } from 'utils';
+import { useCreation } from 'ahooks';
 import { useAppProvider } from 'hooks';
-import { appConfig } from 'configuration';
 import { Outlet } from 'react-router-dom';
-import { Grid, Layout, Result } from 'antd';
-import { FormattedMessage } from 'components';
+import { sidebarMenus } from 'configuration';
+import { FormattedMessage } from 'react-intl';
+import { Avatar, Breadcrumb, Layout, Menu, Result, theme, Typography } from 'antd';
+import { useMasterLayoutController } from '../masterLayout.function';
 import { LoadingOutlined } from '@ant-design/icons';
 
-import Header from '../MasterLayoutHeader';
-import Sidebar from '../MasterLayoutSidebar';
-import { useMasterLayoutFetch } from '../masterLayout.api';
-import { onFinallyGetAuthUser } from '../masterLayout.function';
-
-const { Content } = Layout;
+const { Text } = Typography;
+const { Sider, Content, Header } = Layout;
 
 const MasterLayoutPage = () => {
-  const sidebar = useRef();
-  const { setApp } = useAppProvider();
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
 
-  const fetch = useMasterLayoutFetch();
-  const { loading } = useRequest(fetch.getAuthUser, {
-    onFinally: (_, data) => onFinallyGetAuthUser({ setApp, data }),
-  });
+  const { app } = useAppProvider();
+  const menuItems = useCreation(() => sidebarMenus(), []);
 
-  const { md } = Grid.useBreakpoint();
+  const { user, title, activeMenu } = app || {};
+  const { loadingGetAuthUser, breadcrumbItems } = useMasterLayoutController({ title });
 
-  if (loading) {
+  const header = '72px';
+  const padding = '14px';
+  const margin = '6px';
+
+  if (loadingGetAuthUser) {
     return (
       <Result
         icon={<LoadingOutlined />}
@@ -36,21 +36,34 @@ const MasterLayoutPage = () => {
     );
   }
 
-  const { onOpenDrawer } = sidebar?.current || {};
-
   return (
-    <Layout hasSider className="master-layout">
-      <Sidebar ref={sidebar} />
+    <Layout className="master-layout">
+      <Sider theme="light" trigger={null} collapsible collapsed={false}>
+        <div className="logo">
+          <Text strong>{envs('REACT_APP_APP_NAME')}</Text>
+        </div>
 
-      <Layout className="site-layout ">
-        <Header onClickMenu={onOpenDrawer} />
+        <Menu mode="inline" items={menuItems} selectedKeys={[activeMenu]} />
+      </Sider>
 
-        <Content>
-          <div className={classNames('container', { mobile: !md })}>
-            <Outlet />
-          </div>
+      <Layout className="site-layout" style={{ background: colorBgContainer }}>
+        <Header style={{ background: colorBgContainer }}>
+          <Breadcrumb items={breadcrumbItems} />
 
-          <div className={classNames({ 'p-12': md, 'pb-116': !md }, 'text-center')}>{appConfig.footer}</div>
+          <Avatar size={28} shape="square">
+            {user?.username?.at?.(0) || 'S'}
+          </Avatar>
+        </Header>
+
+        <Content
+          style={{
+            padding,
+            margin: `${margin} 14px`,
+            background: colorBgContainer,
+            minHeight: `calc(100vh - ${header} - ${padding} - ${margin})`,
+          }}
+        >
+          <Outlet />
         </Content>
       </Layout>
     </Layout>

@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 import 'antd/dist/reset.css';
+import 'styles/index.less';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

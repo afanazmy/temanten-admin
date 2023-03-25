@@ -1,7 +1,8 @@
+import Icon from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { paths, permissions } from 'routes';
 import { FormattedMessage } from 'components';
-import { HomeOutlined } from '@ant-design/icons';
+import { Gauge } from 'assets';
 
 /**
  * @typedef {{
@@ -38,8 +39,7 @@ export const sidebarMenus = ({ user } = {}) => {
           <FormattedMessage id="common.Dashboard" />
         </Link>
       ),
-      icon: <HomeOutlined />,
-      permission: permissions.DashboardReport,
+      icon: <Icon component={Gauge} />,
     },
   ];
 
