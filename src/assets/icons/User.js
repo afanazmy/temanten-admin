@@ -1,6 +1,6 @@
-const User = () => {
+const User = ({ size }) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256">
+    <svg xmlns="http://www.w3.org/2000/svg" width={size ?? 20} height={size ?? 20} fill="#000000" viewBox="0 0 256 256">
       <path
         d="M200,32H56a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H200a8,8,0,0,0,8-8V40A8,8,0,0,0,200,32ZM128,168a32,32,0,1,1,32-32A32,32,0,0,1,128,168Z"
         opacity="0.2"

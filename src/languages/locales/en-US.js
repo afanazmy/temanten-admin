@@ -23,5 +23,6 @@ export const enUSCommonLocale = {
   'common.Next': 'Next',
   'common.Back': 'Back',
   'common.Continue': 'Continue',
+  'common.Search': 'Search',
   'common.Dashboard': 'Dashboard',
 };

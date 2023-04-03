@@ -23,5 +23,6 @@ export const idIDCommonLocale = {
   'common.Next': 'Selanjutnya',
   'common.Back': 'Kembali',
   'common.Continue': 'Lanjutkan',
+  'common.Search': 'Cari',
   'common.Dashboard': 'Beranda',
 };

@@ -1,8 +1,8 @@
+import { paths } from 'routes';
+import { Gauge, User } from 'assets';
 import Icon from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import { paths, permissions } from 'routes';
 import { FormattedMessage } from 'components';
-import { Gauge, User } from 'assets';
 
 /**
  * @typedef {{
