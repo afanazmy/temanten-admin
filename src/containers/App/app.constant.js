@@ -15,8 +15,8 @@ export const theme = {
       Menu: { colorItemTextSelected: '#1C1C1C', colorItemBgSelected: 'rgba(0, 0, 0, 0.05)' },
       Table: { colorTextHeading: 'rgba(0, 0, 0, 0.4)' },
       Avatar: { colorTextPlaceholder: '#1C1C1C' },
-      ModuleBar: { backgroundColor: '#F7F9FB' },
-      Search: { backgroundColor: 'rgba(255, 255, 255, 0.8)', placeholderColor: 'rgba(0, 0, 0, 0.2)' },
+      ModuleBar: { colorBgContainer: '#F7F9FB' },
+      Search: { colorBgContainer: 'rgba(255, 255, 255, 0.8)', colorPlaceholder: 'rgba(0, 0, 0, 0.2)' },
     },
   },
 };

@@ -9,7 +9,7 @@ const ModuleBar = ({ addPermission }) => {
   const { ModuleBar } = token || {};
 
   return (
-    <div className="module-bar" style={{ backgroundColor: ModuleBar?.backgroundColor }}>
+    <div className="module-bar" style={{ backgroundColor: ModuleBar?.colorBgContainer }}>
       <Space size={8}>
         {addPermission ? <Button className="btn-snow-ui" type="text" icon={<Icon component={Plus} />} /> : null}
         <Button className="btn-snow-ui" type="text" icon={<Icon component={Funnel} />} />

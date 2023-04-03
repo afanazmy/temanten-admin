@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import Icon from '@ant-design/icons';
 import { useMemoizedFn } from 'ahooks';
+import { useIntl } from 'components/Intl';
 import { Search as SearchIc } from 'assets';
 import { Input, theme as antTheme } from 'antd';
 import { useStyleRegister } from '@ant-design/cssinjs';
-import { useIntl } from 'components/Intl';
 
 const SearchIcon = () => <SearchIc size={16} />;
 
@@ -29,15 +29,15 @@ const Search = (props) => {
     (prefixCls, token) => ({
       [`.${prefixCls}`]: {
         '.ant-input-group-addon': {
-          backgroundColor: `${token?.Search?.backgroundColor} !important`,
+          backgroundColor: `${token?.Search?.colorBgContainer} !important`,
 
           svg: {
-            fill: `${token?.Search?.placeholderColor}`,
+            fill: `${token?.Search?.colorPlaceholder}`,
           },
         },
 
         input: {
-          backgroundColor: `${token?.Search?.backgroundColor} !important`,
+          backgroundColor: `${token?.Search?.colorBgContainer} !important`,
 
           '&:hover, &:focus': {
             borderColor: `${token?.colorBorder} !important`,
