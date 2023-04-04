@@ -2,9 +2,9 @@ import { envs } from 'utils';
 import { imgPaths } from 'assets';
 import { Col, Row, Skeleton, Typography } from 'antd';
 
-import SignInForm from './SignInForm';
-import { DrawerSetup } from './signin-components';
-import { useSignInController } from './signIn.function';
+import SignInForm from '../SignInForm';
+import { DrawerSetup } from '../signin-components';
+import { useSignInController } from '../signIn.function';
 
 const { Title } = Typography;
 

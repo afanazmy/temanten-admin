@@ -117,7 +117,6 @@ export const useTable = (service, options, plugins) => {
 
   const tableProps = useCreation(
     () => ({
-      loading: rest.loading,
       dataSource: data?.result?.data,
       onChange: onTableChange,
       pagination: paginate

@@ -1,6 +1,7 @@
 export * from './ErrorBoundary';
 export * from './ErrorPage';
 export * from './Intl';
+export * from './IsActive';
 export * from './Loadable';
 export * from './ModuleBar';
 export * from './NotFound';

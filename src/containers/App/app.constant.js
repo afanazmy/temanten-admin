@@ -16,7 +16,17 @@ export const theme = {
       Table: { colorTextHeading: 'rgba(0, 0, 0, 0.4)' },
       Avatar: { colorTextPlaceholder: '#1C1C1C' },
       ModuleBar: { colorBgContainer: '#F7F9FB' },
-      Search: { colorBgContainer: 'rgba(255, 255, 255, 0.8)', colorPlaceholder: 'rgba(0, 0, 0, 0.2)' },
+      Search: {
+        colorBgContainer: 'rgba(255, 255, 255, 0.8)',
+        colorPlaceholder: 'rgba(0, 0, 0, 0.2)',
+        colorItemBgActive: 'rgba(255, 255, 255, 1)',
+      },
+      IsActive: {
+        colorTextInactive: 'rgba(0, 0, 0, 0.4)',
+        colorTextActive: '#4AA785',
+        colorBadgeInactive: 'rgba(0, 0, 0, 0.4)',
+        colorBadgeActive: '#A1E3CB',
+      },
     },
   },
 };

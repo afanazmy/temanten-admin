@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom';
 import { sidebarMenus } from 'configuration';
 import { FormattedMessage } from 'react-intl';
 import { LoadingOutlined } from '@ant-design/icons';
-import { Avatar, Breadcrumb, Layout, Menu, Result, theme, Typography } from 'antd';
+import { Breadcrumb, Grid, Layout, Menu, Result, theme, Typography } from 'antd';
 
 import { useMasterLayoutController } from '../masterLayout.function';
 
@@ -19,9 +19,10 @@ const MasterLayoutPage = () => {
   } = theme.useToken();
 
   const { app } = useAppProvider();
+  const { md } = Grid.useBreakpoint();
   const menuItems = useCreation(() => sidebarMenus(), []);
 
-  const { user, title, activeMenu } = app || {};
+  const { title, activeMenu } = app || {};
   const { loadingGetAuthUser, breadcrumbItems } = useMasterLayoutController({ title });
 
   const header = '72px';
@@ -40,22 +41,20 @@ const MasterLayoutPage = () => {
 
   return (
     <Layout className="master-layout">
-      <Sider theme="light" trigger={null} collapsible collapsed={false}>
-        <div className="logo">
-          <img alt="temanten-logo" src={imgPaths.images.logo} />
-          <Text strong>{envs('REACT_APP_APP_NAME')}</Text>
-        </div>
+      {md ? (
+        <Sider theme="light" trigger={null} collapsible collapsed={false}>
+          <div className="logo">
+            <img alt="temanten-logo" src={imgPaths.images.logo} />
+            <Text strong>{envs('REACT_APP_APP_NAME')}</Text>
+          </div>
 
-        <Menu mode="inline" items={menuItems} selectedKeys={[activeMenu]} />
-      </Sider>
+          <Menu mode="inline" items={menuItems} selectedKeys={[activeMenu]} />
+        </Sider>
+      ) : null}
 
       <Layout className="site-layout" style={{ background: colorBgContainer }}>
         <Header style={{ background: colorBgContainer }}>
           <Breadcrumb items={breadcrumbItems} />
-
-          <Avatar size={28} shape="square">
-            {user?.username?.at?.(0) || 'S'}
-          </Avatar>
         </Header>
 
         <Content

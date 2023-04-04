@@ -24,5 +24,8 @@ export const idIDCommonLocale = {
   'common.Back': 'Kembali',
   'common.Continue': 'Lanjutkan',
   'common.Search': 'Cari',
+  'common.Status': 'Status',
+  'common.Active': 'Aktif',
+  'common.Inactive': 'Tidak Aktif',
   'common.Dashboard': 'Beranda',
 };
