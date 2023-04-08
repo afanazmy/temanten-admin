@@ -27,5 +27,10 @@ export const idIDCommonLocale = {
   'common.Status': 'Status',
   'common.Active': 'Aktif',
   'common.Inactive': 'Tidak Aktif',
+  'common.Activate': 'Aktifkan',
+  'common.Deactivate': 'Nonaktifkan',
+  'common.Update': 'Ubah',
+  'common.Delete': 'Hapus',
+  'common.Restore': 'Restore',
   'common.Dashboard': 'Beranda',
 };

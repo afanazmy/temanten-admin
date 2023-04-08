@@ -8,5 +8,6 @@ export * from './NotFound';
 export * from './OptionalField';
 export * from './PrivateRoute';
 export * from './PublicRoute';
+export * from './Table';
 export * from './TopProgressBar';
 export * from './Unauthorized';

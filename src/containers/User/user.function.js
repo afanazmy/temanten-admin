@@ -1,10 +1,11 @@
-import { FormattedMessage, IsActive } from 'components';
+import { FormattedMessage, IsActive, TableAction } from 'components';
 
 /**
  * @returns {import('antd').TableProps['columns']}
  */
-export const columns = () => {
-  return [
+export const columns = ({ canUpdate, canUpdateStatus }) => {
+  /** @type {import('antd').TableProps['columns']} */
+  const _columns = [
     {
       title: <FormattedMessage id="user.Username" />,
       dataIndex: 'username',
@@ -17,4 +18,18 @@ export const columns = () => {
       render: (text) => <IsActive isActive={text} />,
     },
   ];
+
+  if (canUpdate || canUpdateStatus) {
+    _columns.push({
+      onCell: () => ({ className: 'table-action-cell' }),
+      actionColumn: true,
+      dataIndex: 'id',
+      width: 40,
+      render: (id, { isActive }) => (
+        <TableAction canUpdate={canUpdate} isActive={isActive} canUpdateStatus={canUpdateStatus} />
+      ),
+    });
+  }
+
+  return _columns;
 };

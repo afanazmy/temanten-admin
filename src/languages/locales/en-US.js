@@ -27,5 +27,10 @@ export const enUSCommonLocale = {
   'common.Status': 'Status',
   'common.Active': 'Active',
   'common.Inactive': 'Inactive',
+  'common.Activate': 'Activate',
+  'common.Deactivate': 'Deactivate',
+  'common.Update': 'Update',
+  'common.Delete': 'Delete',
+  'common.Restore': 'Restore',
   'common.Dashboard': 'Dashboard',
 };

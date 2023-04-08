@@ -1,7 +1,10 @@
 .default-table {
   .ant-table-cell {
     padding: 8px 16px !important;
-    font-size: 12px;
+
+    .ant-typography {
+      font-size: 12px;
+    }
 
     .ant-empty-normal {
       margin: 0px;
@@ -15,9 +18,24 @@
         font-size: 12px;
       }
     }
+
+    .expanded-table {
+      td {
+        padding: 2px 8px;
+      }
+    }
   }
 
-  th.ant-table-cell {
+  .table-action-cell {
+    padding: 0px !important;
+    cursor: pointer;
+  }
+
+  .ant-table-tbody > tr.ant-table-row:hover > .table-action-cell .btn-table-action {
+    opacity: 1;
+  }
+
+  thead .ant-table-cell {
     font-size: 12px;
     padding: 11px 16px !important;
     background: transparent !important;
@@ -25,5 +43,17 @@
 
   th.ant-table-cell::before {
     display: none;
+  }
+
+  &.mobile {
+    .ant-table-tbody > tr.ant-table-row > .table-action-cell .btn-table-action {
+      opacity: 1;
+    }
+  }
+}
+
+.table-action-overlay {
+  .ant-dropdown-menu-item {
+    line-height: 24px !important;
   }
 }

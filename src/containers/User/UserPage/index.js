@@ -1,8 +1,7 @@
-import { Table } from 'antd';
 import { paths } from 'routes';
-import { usePage, useTable } from 'hooks';
 import { useCreation } from 'ahooks';
-import { ModuleBar } from 'components';
+import { ModuleBar, Table } from 'components';
+import { usePage, usePermission, useTable } from 'hooks';
 
 import { columns } from '../user.function';
 import { useUserFetch } from '../user.api';
@@ -10,16 +9,20 @@ import { useUserFetch } from '../user.api';
 const UserPage = () => {
   usePage({ title: 'user.User', activeMenu: paths.user });
 
-  const _columns = useCreation(() => columns(), []);
+  const [canAdd, canUpdate, canUpdateStatus] = usePermission({
+    permissions: ['AddUser', 'UpdateUser', 'UpdateUserStatus'],
+  });
+
+  const _columns = useCreation(() => columns({ canUpdate, canUpdateStatus }), [canUpdate, canUpdateStatus]);
 
   const fetch = useUserFetch();
   const { loading: loadingGetUsers, tableProps } = useTable(fetch.getUsers);
 
   return (
     <>
-      <ModuleBar addPermission={true} loading={loadingGetUsers} />
+      <ModuleBar canAdd={canAdd} loading={loadingGetUsers} />
 
-      <Table {...tableProps} columns={_columns} className="default-table" rowKey="id" />
+      <Table {...tableProps} columns={_columns} rowKey="id" />
     </>
   );
 };
