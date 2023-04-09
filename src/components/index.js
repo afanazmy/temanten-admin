@@ -1,3 +1,4 @@
+export * from './Drawer';
 export * from './ErrorBoundary';
 export * from './ErrorPage';
 export * from './Intl';

@@ -8,6 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Breadcrumb, Grid, Layout, Menu, Result, theme, Typography } from 'antd';
 
+import MasterLayoutDrawer from '../MasterLayoutDrawer';
 import { useMasterLayoutController } from '../masterLayout.function';
 
 const { Text } = Typography;
@@ -23,7 +24,7 @@ const MasterLayoutPage = () => {
   const menuItems = useCreation(() => sidebarMenus(), []);
 
   const { title, activeMenu } = app || {};
-  const { loadingGetAuthUser, breadcrumbItems } = useMasterLayoutController({ title });
+  const { loadingGetAuthUser, breadcrumbItems, drawer, onOpen } = useMasterLayoutController({ title });
 
   const header = '72px';
   const padding = '14px';
@@ -54,6 +55,8 @@ const MasterLayoutPage = () => {
 
       <Layout className="site-layout" style={{ background: colorBgContainer }}>
         <Header style={{ background: colorBgContainer }}>
+          {!md ? <MasterLayoutDrawer /> : null}
+
           <Breadcrumb items={breadcrumbItems} />
         </Header>
 

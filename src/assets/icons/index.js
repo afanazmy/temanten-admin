@@ -6,5 +6,6 @@ export { default as Pencil } from './Pencil';
 export { default as Plus } from './Plus';
 export { default as Restore } from './Restore';
 export { default as Search } from './Search';
+export { default as Sidebar } from './Sidebar';
 export { default as User } from './User';
 export { default as Trash } from './Trash';

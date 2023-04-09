@@ -3,9 +3,10 @@ import { useAppProvider } from 'hooks';
 import { FormattedMessage } from 'components';
 import { removeDataForLogout } from 'helpers';
 import { LocalStorage, storageKey } from 'utils';
-import { useCreation, useRequest } from 'ahooks';
+import { useCreation, useMemoizedFn, useRequest } from 'ahooks';
 
 import { useMasterLayoutFetch } from './masterLayout.api';
+import { useRef } from 'react';
 
 export const onFinallyGetAuthUser = ({ setApp, data }) => {
   if (!data?.result) return;
@@ -22,6 +23,8 @@ export const useMasterLayoutController = ({ title }) => {
   const { setApp } = useAppProvider();
   const fetch = useMasterLayoutFetch();
 
+  const drawer = useRef();
+
   const { loading: loadingGetAuthUser } = useRequest(fetch.getAuthUser, {
     onFinally: (_, data) => onFinallyGetAuthUser({ setApp, data }),
   });
@@ -31,5 +34,13 @@ export const useMasterLayoutController = ({ title }) => {
     return [{ title: 'Home' }, { title: <FormattedMessage id={title} /> }];
   }, [title]);
 
-  return { loadingGetAuthUser, breadcrumbItems };
+  const onOpen = useMemoizedFn(() => {
+    drawer?.current?.onOpen?.();
+  });
+
+  const onClose = useMemoizedFn(() => {
+    drawer?.current?.onClose?.();
+  });
+
+  return { loadingGetAuthUser, breadcrumbItems, drawer, onOpen, onClose };
 };
