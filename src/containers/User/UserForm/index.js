@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button, Form, Input } from 'antd';
 import { setFieldsError, validation } from 'helpers';
-import { FormattedMessage, useIntl } from 'components';
+import { FormattedMessage, HiddenSubmit, useIntl } from 'components';
 
 import { useUserController } from '../user.function';
 import { UserPermissionForm } from '../user-components';
@@ -58,6 +58,8 @@ const UserForm = (props) => {
       ) : null}
 
       <UserPermissionForm permissions={permissions} loading={loadingPermission} />
+
+      <HiddenSubmit />
     </Form>
   );
 };

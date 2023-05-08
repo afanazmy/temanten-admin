@@ -1,5 +1,6 @@
 export * from './Drawer';
 export * from './ErrorBoundary';
+export * from './HiddenSubmit';
 export * from './ErrorPage';
 export * from './Intl';
 export * from './IsActive';

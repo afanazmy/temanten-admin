@@ -11,14 +11,14 @@ const token = {
 export const theme = {
   /** @type {import("antd/es/config-provider").ConfigProviderProps['theme']} */
   light: {
-    token: { ...token, colorPrimary: '#1C1C1C', borderRadius: '8px' },
+    token: { ...token, colorPrimary: '#1C1C1C', borderRadius: 8 },
     components: {
       Menu: { colorItemTextSelected: '#1C1C1C', colorItemBgSelected: 'rgba(0, 0, 0, 0.05)' },
-      Table: { colorTextHeading: 'rgba(0, 0, 0, 0.4)', colorFillAlter: '#F7F9FB', fontSize: '12px' },
+      Table: { colorTextHeading: 'rgba(0, 0, 0, 0.4)', colorFillAlter: '#F7F9FB', fontSize: 12 },
       Avatar: { colorTextPlaceholder: '#1C1C1C' },
       Select: { controlItemBgActive: 'rgba(0, 0, 0, 0.05)' },
-      Badge: { fontSize: '12px' },
-      Checkbox: { borderRadiusSM: '4px' },
+      Badge: { fontSize: 12 },
+      Checkbox: { borderRadiusSM: 4 },
       ModuleBar: { colorBgContainer: '#F7F9FB' },
       Search: {
         colorBgContainer: 'rgba(255, 255, 255, 0.8)',

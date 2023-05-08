@@ -78,7 +78,7 @@ export const useTable = (service, options, plugins) => {
     setTable({ currentPage: param.page });
   }, [param.page, table.currentPage, setTable]);
 
-  const run = useMemoizedFn((params = {}) => _run({ ...param, ...params, page: params?.page || 1 }));
+  const run = useMemoizedFn((params = {}) => _run({ ...params, page: params?.page || 1 }));
 
   const onTableChange = useMemoizedFn(({ pageSize, current }, _f, sort, { action }) => {
     let _sorts;
@@ -98,11 +98,9 @@ export const useTable = (service, options, plugins) => {
 
   /** callback `onFinish` yang digunakan di form filternya */
   const onFinishFilter = useMemoizedFn((data = {}) => {
-    deleteEmptyRequest(data);
-    const { query, ...rest } = data;
-    const noOtherRequest = !Object.keys(rest)?.length;
-    if (!query && noOtherRequest) return run({ search: null, page: 1 });
-    return run({ search: { ...data }, page: 1 });
+    const request = { ...param, ...data };
+    deleteEmptyRequest(request);
+    return run({ ...request, page: 1 });
   });
 
   const onResetFilter = useMemoizedFn(() => run({ search: null, page: 1 }));

@@ -1,10 +1,29 @@
 import Icon from '@ant-design/icons';
+import { CircleNotch, Plus } from 'assets';
 import { Button, Space, theme } from 'antd';
-import { CircleNotch, Funnel, Plus } from 'assets';
 
 import Search from './Search';
+import Filter from './Filter';
 
-const ModuleBar = ({ canAdd, drawerAdd, onAdd, loading }) => {
+/**
+ * @typedef {Object} Filter
+ * @property {string} name
+ * @property {import('components/Intl/FormattedMessage').IFormattedMessage['id']} label
+ * @property {"string" | "status"} type
+ *
+ * @typedef {Object} ModuleBarProps
+ * @property {import('antd').FormInstance} form
+ * @property {boolean} canAdd
+ * @property {import('react').RefObject} drawerAdd
+ * @property {() => void} onAdd
+ * @property {() => void} onFinishFilter
+ * @property {boolean} loading
+ * @property {Filter[]} filters
+ *
+ * @param {ModuleBarProps} props
+ * @returns
+ */
+const ModuleBar = ({ form, canAdd, drawerAdd, onAdd, loading, onFinishFilter, filters }) => {
   const { token } = theme.useToken();
   const { ModuleBar } = token || {};
 
@@ -20,7 +39,7 @@ const ModuleBar = ({ canAdd, drawerAdd, onAdd, loading }) => {
           <Button className="btn-snow-ui" type="text" icon={<Icon component={Plus} />} onClick={_onAdd} />
         ) : null}
 
-        <Button className="btn-snow-ui" type="text" icon={<Icon component={Funnel} />} />
+        <Filter form={form} onFinishFilter={onFinishFilter} filters={filters} />
 
         {loading ? <Icon component={CircleNotch} className="anticon-spin" /> : null}
       </Space>
