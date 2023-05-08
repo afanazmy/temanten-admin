@@ -6,7 +6,7 @@ import { Drawer as AntDrawer } from 'antd';
  * @returns
  */
 const Drawer = (props) => {
-  return <AntDrawer {...props} />;
+  return <AntDrawer destroyOnClose={true} {...props} />;
 };
 
 export default Drawer;

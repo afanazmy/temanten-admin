@@ -11,6 +11,7 @@ export const useUserFetch = ({ id } = {}) => {
   const deactivateUser = useAPI(withParams(endpoints.deactivateUser, { id }), { method: 'put', showMessage: true });
   const activateUsers = useAPI(endpoints.activateUsers, { method: 'put', showMessage: true });
   const deactivateUsers = useAPI(endpoints.deactivateUsers, { method: 'put', showMessage: true });
+  const getPermissions = useAPI(endpoints.getPermissions);
 
   return {
     getUsers,
@@ -21,5 +22,6 @@ export const useUserFetch = ({ id } = {}) => {
     deactivateUser,
     activateUsers,
     deactivateUsers,
+    getPermissions,
   };
 };

@@ -18,6 +18,7 @@ export const theme = {
       Avatar: { colorTextPlaceholder: '#1C1C1C' },
       Select: { controlItemBgActive: 'rgba(0, 0, 0, 0.05)' },
       Badge: { fontSize: '12px' },
+      Checkbox: { borderRadiusSM: '4px' },
       ModuleBar: { colorBgContainer: '#F7F9FB' },
       Search: {
         colorBgContainer: 'rgba(255, 255, 255, 0.8)',

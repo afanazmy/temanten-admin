@@ -24,7 +24,7 @@ const MasterLayoutPage = () => {
   const menuItems = useCreation(() => sidebarMenus(), []);
 
   const { title, activeMenu } = app || {};
-  const { loadingGetAuthUser, breadcrumbItems, drawer, onOpen } = useMasterLayoutController({ title });
+  const { loadingGetAuthUser, breadcrumbItems } = useMasterLayoutController({ title });
 
   const header = '72px';
   const padding = '14px';

@@ -8,7 +8,7 @@ import { DotsThree, Pencil, Restore, Trash } from 'assets';
 
 import { genTableActionStyle } from './table.style';
 
-const TableAction = ({ canUpdate, canUpdateStatus, canDelete, isActive, deletedAt }) => {
+const TableAction = ({ record, canUpdate, onUpdate, canUpdateStatus, canDelete, isActive, deletedAt }) => {
   const prefixCls = 'table-action';
 
   const { theme, token, hashId } = _theme.useToken();
@@ -22,7 +22,12 @@ const TableAction = ({ canUpdate, canUpdateStatus, canDelete, isActive, deletedA
 
     /** @type {import('antd').MenuProps['items']} */
     const items = [
-      { key: 'update', label: <FormattedMessage id="common.Update" />, icon: <Icon component={Pencil} /> },
+      {
+        key: 'update',
+        icon: <Icon component={Pencil} />,
+        onClick: () => onUpdate?.(record),
+        label: <FormattedMessage id="common.Update" />,
+      },
     ];
 
     if (canUpdateStatus) {

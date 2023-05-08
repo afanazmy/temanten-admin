@@ -1,13 +1,15 @@
+import { useRequest } from 'ahooks';
 import { FormattedMessage, IsActive, TableAction } from 'components';
+import { useUserFetch } from './user.api';
 
 /**
  * @returns {import('antd').TableProps['columns']}
  */
-export const columns = ({ canUpdate, canUpdateStatus }) => {
+export const columns = ({ canUpdate, onUpdate, canUpdateStatus }) => {
   /** @type {import('antd').TableProps['columns']} */
   const _columns = [
     {
-      title: <FormattedMessage id="user.Username" />,
+      title: <FormattedMessage id="common.Username" />,
       dataIndex: 'username',
     },
     {
@@ -25,11 +27,26 @@ export const columns = ({ canUpdate, canUpdateStatus }) => {
       actionColumn: true,
       dataIndex: 'id',
       width: 40,
-      render: (id, { isActive }) => (
-        <TableAction canUpdate={canUpdate} isActive={isActive} canUpdateStatus={canUpdateStatus} />
+      render: (id, record) => (
+        <TableAction
+          record={record}
+          onUpdate={onUpdate}
+          canUpdate={canUpdate}
+          isActive={record.isActive}
+          canUpdateStatus={canUpdateStatus}
+        />
       ),
     });
   }
 
   return _columns;
+};
+
+export const useUserController = ({ onFinish }) => {
+  const fetch = useUserFetch();
+  const { data: permission, loading: loadingPermission } = useRequest(fetch.getPermissions);
+
+  const _onFinish = (values) => onFinish(values);
+
+  return { permissions: permission?.result, loadingPermission, _onFinish };
 };
