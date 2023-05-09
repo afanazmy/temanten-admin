@@ -8,7 +8,16 @@ import { DotsThree, Pencil, Restore, Trash } from 'assets';
 
 import { genTableActionStyle } from './table.style';
 
-const TableAction = ({ record, canUpdate, onUpdate, canUpdateStatus, canDelete, isActive, deletedAt }) => {
+const TableAction = ({
+  record,
+  canUpdate,
+  onUpdate,
+  onUpdateStatus,
+  canUpdateStatus,
+  canDelete,
+  isActive,
+  deletedAt,
+}) => {
   const prefixCls = 'table-action';
 
   const { theme, token, hashId } = _theme.useToken();
@@ -33,6 +42,7 @@ const TableAction = ({ record, canUpdate, onUpdate, canUpdateStatus, canDelete, 
     if (canUpdateStatus) {
       items.push({
         key: 'updateStatus',
+        onClick: () => onUpdateStatus?.(record),
         icon: <Icon component={isActive === 1 ? Trash : Restore} />,
         label: <FormattedMessage id={isActive === 1 ? 'common.Deactivate' : 'common.Activate'} />,
       });
@@ -47,7 +57,7 @@ const TableAction = ({ record, canUpdate, onUpdate, canUpdateStatus, canDelete, 
     }
 
     return items;
-  }, [canUpdate, canUpdateStatus]);
+  }, [canUpdate, canUpdateStatus, isActive]);
 
   if (items?.length === 0) return null;
 

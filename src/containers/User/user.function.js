@@ -1,11 +1,9 @@
 import { useRequest } from 'ahooks';
 import { FormattedMessage, IsActive, TableAction } from 'components';
+
 import { useUserFetch } from './user.api';
 
-/**
- * @returns {import('antd').TableProps['columns']}
- */
-export const columns = ({ canUpdate, onUpdate, canUpdateStatus }) => {
+export const columns = ({ canUpdate, onUpdate, onUpdateStatus, canUpdateStatus }) => {
   /** @type {import('antd').TableProps['columns']} */
   const _columns = [
     {
@@ -33,6 +31,7 @@ export const columns = ({ canUpdate, onUpdate, canUpdateStatus }) => {
           onUpdate={onUpdate}
           canUpdate={canUpdate}
           isActive={record.isActive}
+          onUpdateStatus={onUpdateStatus}
           canUpdateStatus={canUpdateStatus}
         />
       ),

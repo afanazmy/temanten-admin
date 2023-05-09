@@ -2,10 +2,11 @@ import axios from 'axios';
 import { message } from 'antd';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
-import { apiBaseUrl, interceptors } from 'utils';
+import { apiBaseUrl, interceptors, withParams } from 'utils';
 import { useEffect, useRef, useState } from 'react';
 import { deleteEmptyRequest, getParamsOrder } from 'helpers';
 import { useCreation, useMemoizedFn, useRequest, useSetState } from 'ahooks';
+import { endpoints } from 'configuration';
 
 /**
  * @typedef {"get" | "post" | "postForm" | "put" | "putForm" | "patch" | "patchForm" | "delete"} Method
@@ -149,6 +150,42 @@ export const useTable = (service, options, plugins) => {
     params: _params,
     tableProps,
   };
+};
+
+/**
+ * @typedef {Object} UpdateStatus
+ * @property {{update: {activate: keyof import('configuration')['endpoints'], deactivate: keyof import('configuration')['endpoints']}, bulkUpdate: {activate: keyof import('configuration')['endpoints'], deactivate: keyof import('configuration')['endpoints']}}} endpoint
+ * @property {() => void} refresh
+ *
+ * @param {UpdateStatus} param
+ */
+export const useUpdateStatus = ({ endpoint, refresh }) => {
+  const updateService = useAPI(endpoints?.[endpoint?.update?.activate], { method: 'put', showMessage: true });
+  const { loading: loadingUpdateStatus, run: putUpdateStatus } = useRequest(updateService, {
+    manual: true,
+    onSuccess: () => refresh?.(),
+  });
+
+  const { loading: loadingBulkUpdateStatus, run: putBulkUpdateStatus } = useRequest(updateService, {
+    manual: true,
+    onSuccess: () => refresh?.(),
+  });
+
+  const updateStatus = useMemoizedFn(({ record, records }) => {
+    if (record && !Array.isArray(records)) {
+      return putUpdateStatus(null, {
+        url: record?.isActive
+          ? withParams(endpoints?.[endpoint?.update?.deactivate], { id: record?.id })
+          : withParams(endpoints?.[endpoint?.update?.activate], { id: record?.id }),
+      });
+    }
+
+    if (!record && Array.isArray(records)) {
+      return putBulkUpdateStatus();
+    }
+  });
+
+  return { updateStatus, loading: loadingUpdateStatus || loadingBulkUpdateStatus || false };
 };
 
 /**
