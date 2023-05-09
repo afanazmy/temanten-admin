@@ -1,9 +1,11 @@
+import { useRef } from 'react';
 import Icon from '@ant-design/icons';
 import { CircleNotch, Plus } from 'assets';
-import { Button, Space, theme } from 'antd';
+import { Button, Form, Space, theme } from 'antd';
 
 import Search from './Search';
 import Filter from './Filter';
+import FilterValue from './FilterValue';
 
 /**
  * @typedef {Object} Filter
@@ -27,25 +29,31 @@ const ModuleBar = ({ form, canAdd, drawerAdd, onAdd, loading, onFinishFilter, fi
   const { token } = theme.useToken();
   const { ModuleBar } = token || {};
 
+  const container = useRef();
+
   const _onAdd = () => {
     if (typeof onAdd === 'function') return onAdd();
     drawerAdd?.current?.onOpen?.();
   };
 
   return (
-    <div className="module-bar" style={{ backgroundColor: ModuleBar?.colorBgContainer }}>
-      <Space size={8}>
-        {canAdd ? (
-          <Button className="btn-snow-ui" type="text" icon={<Icon component={Plus} />} onClick={_onAdd} />
-        ) : null}
+    <Form form={form} layout="vertical" onFinish={onFinishFilter}>
+      <div ref={container} className="module-bar" style={{ backgroundColor: ModuleBar?.colorBgContainer }}>
+        <Space size={8}>
+          {canAdd ? (
+            <Button className="btn-snow-ui" type="text" icon={<Icon component={Plus} />} onClick={_onAdd} />
+          ) : null}
 
-        <Filter form={form} onFinishFilter={onFinishFilter} filters={filters} />
+          <Filter form={form} container={container} filters={filters} />
 
-        {loading ? <Icon component={CircleNotch} className="anticon-spin" /> : null}
-      </Space>
+          {loading ? <Icon component={CircleNotch} className="anticon-spin" /> : null}
+        </Space>
 
-      <Search />
-    </div>
+        <Search form={form} />
+      </div>
+
+      <FilterValue form={form} filters={filters} />
+    </Form>
   );
 };
 

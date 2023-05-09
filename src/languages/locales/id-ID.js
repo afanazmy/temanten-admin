@@ -25,6 +25,7 @@ export const idIDCommonLocale = {
   'common.Continue': 'Lanjutkan',
   'common.Search': 'Cari',
   'common.Filter': 'Filter',
+  'common.Reset': 'Reset',
   'common.Status': 'Status',
   'common.All': 'All',
   'common.Active': 'Aktif',

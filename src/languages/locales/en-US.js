@@ -25,6 +25,7 @@ export const enUSCommonLocale = {
   'common.Continue': 'Continue',
   'common.Search': 'Search',
   'common.Filter': 'Filter',
+  'common.Reset': 'Reset',
   'common.Status': 'Status',
   'common.All': 'All',
   'common.Active': 'Active',
