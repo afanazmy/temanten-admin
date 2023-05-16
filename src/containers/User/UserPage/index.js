@@ -22,7 +22,12 @@ const UserPage = () => {
   });
 
   const fetch = useUserFetch();
-  const { onFinishFilter, loading: loadingGetUsers, tableProps, refresh } = useTable(fetch.getUsers, { form });
+  const {
+    onFinishFilter,
+    loading: loadingGetUsers,
+    tableProps,
+    refresh,
+  } = useTable(fetch.getUsers, { form, showSelection: true });
 
   const { updateStatus, loading: loadingUpdateStatus } = useUpdateStatus({
     endpoint: {

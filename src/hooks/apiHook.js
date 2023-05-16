@@ -55,6 +55,7 @@ export const useAPI = (endpoint, config = {}) => {
  * @typedef {Object} IOptions
  * @property {import('antd').FormInstance} form
  * @property {Boolean} paginate
+ * @property {Boolean} showSelection
  *
  * @typedef {Object} IResult
  * @property {() => void} onFilter
@@ -69,10 +70,12 @@ export const useAPI = (endpoint, config = {}) => {
  * @return {import('ahooks/lib/useRequest/src/types').Result & IResult}
  */
 export const useTable = (service, options, plugins) => {
-  const { form, paginate = true, ...restOptions } = options || {};
+  const { form, showSelection, paginate = true, ...restOptions } = options || {};
   const [table, setTable] = useSetState({ sorts: [], currentPage: 1, pageSize: undefined });
   const { data, run: _run, params, ...rest } = useRequest(service, restOptions, plugins);
   const [param = {}] = params || [];
+
+  const [selectedRows, setSelectedRows] = useSetState({ keys: [], rows: [] });
 
   useEffect(() => {
     if (param.page === table.currentPage) return;
@@ -109,15 +112,23 @@ export const useTable = (service, options, plugins) => {
   /** untuk button reload */
   const onReload = rest.refresh;
 
+  /** @type {import('antd').TableProps['rowSelection']} */
+  const rowSelection = {
+    selectedRowKeys: selectedRows.keys,
+    onChange: (keys, rows) => setSelectedRows({ keys, rows }),
+  };
+
   const _params = useCreation(
     () => [{ ...param, pagination: paginate ? param?.pagination || data?.result?.perPage : undefined }],
     [JSON.stringify(param), param?.pagination, data?.result?.perPage],
   );
 
   const tableProps = useCreation(
+    /** @returns {import('antd').TableProps} */
     () => ({
-      dataSource: data?.result?.data,
       onChange: onTableChange,
+      dataSource: data?.result?.data,
+      rowSelection: showSelection ? rowSelection : undefined,
       pagination: paginate
         ? {
             showSizeChanger: true,
@@ -131,6 +142,8 @@ export const useTable = (service, options, plugins) => {
     [
       paginate,
       rest.loading,
+      selectedRows,
+      showSelection,
       table?.currentPage,
       data?.result?.total,
       data?.result?.perPage,

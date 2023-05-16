@@ -14,7 +14,13 @@ export const theme = {
     token: { ...token, colorPrimary: '#1C1C1C', borderRadius: 8 },
     components: {
       Menu: { colorItemTextSelected: '#1C1C1C', colorItemBgSelected: 'rgba(0, 0, 0, 0.05)' },
-      Table: { colorTextHeading: 'rgba(0, 0, 0, 0.4)', colorFillAlter: '#F7F9FB', fontSize: 12 },
+      Table: {
+        colorTextHeading: 'rgba(0, 0, 0, 0.4)',
+        colorFillAlter: '#F7F9FB',
+        fontSize: 12,
+        controlItemBgActive: 'rgba(0, 0, 0, 0.02)',
+        controlItemBgActiveHover: 'rgba(0, 0, 0, 0.04)',
+      },
       Avatar: { colorTextPlaceholder: '#1C1C1C' },
       Select: { controlItemBgActive: 'rgba(0, 0, 0, 0.05)' },
       Badge: { fontSize: 12 },
