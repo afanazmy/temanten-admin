@@ -42,9 +42,9 @@ const TableAction = ({
     if (canUpdateStatus) {
       items.push({
         key: 'updateStatus',
-        onClick: () => onUpdateStatus?.(record),
         icon: <Icon component={isActive === 1 ? Trash : Restore} />,
         label: <FormattedMessage id={isActive === 1 ? 'common.Deactivate' : 'common.Activate'} />,
+        onClick: () => onUpdateStatus?.({ record, action: isActive === 1 ? 'deactivate' : 'activate' }),
       });
     }
 
@@ -53,6 +53,7 @@ const TableAction = ({
         key: 'delete',
         icon: <Icon component={deletedAt ? Restore : Trash} />,
         label: <FormattedMessage id={deletedAt ? 'common.Restore' : 'common.Delete'} />,
+        onClick: () => onUpdateStatus?.({ record, action: deletedAt === 1 ? 'restore' : 'delete' }),
       });
     }
 

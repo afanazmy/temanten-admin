@@ -42,8 +42,8 @@ const UserPage = () => {
       columns({
         canUpdate,
         canUpdateStatus,
-        onUpdateStatus: (record) => updateStatus({ record }),
         onUpdate: (record) => drawerUpdate.current?.onOpen?.(record),
+        onUpdateStatus: ({ record, action }) => updateStatus({ record, action }),
       }),
     [canUpdate, canUpdateStatus],
   );
@@ -54,8 +54,11 @@ const UserPage = () => {
         form={form}
         canAdd={canAdd}
         drawerAdd={drawerAdd}
+        updateStatus={updateStatus}
         onFinishFilter={onFinishFilter}
+        canUpdateStatus={canUpdateStatus}
         loading={loadingGetUsers || loadingUpdateStatus}
+        selectedRows={tableProps?.rowSelection?.selectedRows}
         filters={[
           { name: 'username', label: 'common.Username', type: 'string' },
           { name: 'isActive', label: 'common.Status', type: 'status' },

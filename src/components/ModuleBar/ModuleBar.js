@@ -5,6 +5,7 @@ import { Button, Form, Space, theme } from 'antd';
 
 import Search from './Search';
 import Filter from './Filter';
+import Selection from './Selection';
 import FilterValue from './FilterValue';
 
 /**
@@ -16,16 +17,32 @@ import FilterValue from './FilterValue';
  * @typedef {Object} ModuleBarProps
  * @property {import('antd').FormInstance} form
  * @property {boolean} canAdd
+ * @property {boolean} canDelete
+ * @property {boolean} canUpdateStatus
  * @property {import('react').RefObject} drawerAdd
  * @property {() => void} onAdd
  * @property {() => void} onFinishFilter
  * @property {boolean} loading
  * @property {Filter[]} filters
+ * @property {String[]} selectedRows
+ * @property {(params: {records: Object[]}) => void} updateStatus
  *
  * @param {ModuleBarProps} props
  * @returns
  */
-const ModuleBar = ({ form, canAdd, drawerAdd, onAdd, loading, onFinishFilter, filters }) => {
+const ModuleBar = ({
+  form,
+  canAdd,
+  drawerAdd,
+  onAdd,
+  loading,
+  onFinishFilter,
+  filters,
+  canDelete,
+  canUpdateStatus,
+  selectedRows,
+  updateStatus,
+}) => {
   const { token } = theme.useToken();
   const { ModuleBar } = token || {};
 
@@ -47,6 +64,13 @@ const ModuleBar = ({ form, canAdd, drawerAdd, onAdd, loading, onFinishFilter, fi
           <Filter form={form} container={container} filters={filters} />
 
           {loading ? <Icon component={CircleNotch} className="anticon-spin" /> : null}
+
+          <Selection
+            canDelete={canDelete}
+            selectedRows={selectedRows}
+            updateStatus={updateStatus}
+            canUpdateStatus={canUpdateStatus}
+          />
         </Space>
 
         <Search form={form} />

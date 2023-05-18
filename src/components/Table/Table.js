@@ -16,7 +16,8 @@ const Table = (props) => {
   const expandable = useCreation(
     /** @returns {import('antd').TableProps['expandable']} */
     () => {
-      if (!mobile) return undefined;
+      const selectedKeys = props?.rowSelection?.selectedRowKeys || [];
+      if (!mobile || selectedKeys?.length) return undefined;
 
       return {
         expandRowByClick: true,
@@ -26,7 +27,7 @@ const Table = (props) => {
         ),
       };
     },
-    [props?.columns, mobile],
+    [props?.columns, props?.rowSelection?.selectedRowKeys, mobile],
   );
 
   return (

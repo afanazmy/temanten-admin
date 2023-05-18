@@ -28,6 +28,7 @@ export const idIDCommonLocale = {
   'common.Reset': 'Reset',
   'common.Status': 'Status',
   'common.All': 'All',
+  'common.Selected': 'Dipilih',
   'common.Active': 'Aktif',
   'common.Inactive': 'Tidak Aktif',
   'common.Activate': 'Aktifkan',

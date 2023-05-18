@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { message } from 'antd';
 import { useIntl } from 'react-intl';
+import { endpoints } from 'configuration';
 import { useNavigate } from 'react-router-dom';
-import { apiBaseUrl, interceptors, withParams } from 'utils';
+import { apiBaseUrl, interceptors } from 'utils';
 import { useEffect, useRef, useState } from 'react';
 import { deleteEmptyRequest, getParamsOrder } from 'helpers';
 import { useCreation, useMemoizedFn, useRequest, useSetState } from 'ahooks';
-import { endpoints } from 'configuration';
 
 /**
  * @typedef {"get" | "post" | "postForm" | "put" | "putForm" | "patch" | "patchForm" | "delete"} Method
@@ -114,6 +114,7 @@ export const useTable = (service, options, plugins) => {
 
   /** @type {import('antd').TableProps['rowSelection']} */
   const rowSelection = {
+    selectedRows: selectedRows.rows,
     selectedRowKeys: selectedRows.keys,
     onChange: (keys, rows) => setSelectedRows({ keys, rows }),
   };
@@ -129,6 +130,27 @@ export const useTable = (service, options, plugins) => {
       onChange: onTableChange,
       dataSource: data?.result?.data,
       rowSelection: showSelection ? rowSelection : undefined,
+      onRow: selectedRows.keys?.length
+        ? (row) => ({
+            onClick: () => {
+              const selected = selectedRows.keys.findIndex((id) => id === row.id);
+              if (selected < 0) {
+                return setSelectedRows({ keys: [...selectedRows.keys, row.id], rows: [...selectedRows.rows, row] });
+              }
+
+              const keys = [...selectedRows.keys];
+              const rows = [...selectedRows.rows];
+
+              const indexKey = selected;
+              const indexRow = selectedRows.rows.findIndex(({ id }) => id === row.id);
+
+              keys?.splice?.(indexKey, 1);
+              rows?.splice?.(indexRow, 1);
+
+              setSelectedRows({ keys, rows });
+            },
+          })
+        : undefined,
       pagination: paginate
         ? {
             showSizeChanger: true,
@@ -184,17 +206,20 @@ export const useUpdateStatus = ({ endpoint, refresh }) => {
     onSuccess: () => refresh?.(),
   });
 
-  const updateStatus = useMemoizedFn(({ record, records }) => {
+  const updateStatus = useMemoizedFn(({ record, records, action }) => {
+    const actions = {
+      activate: endpoints?.[endpoint?.update?.activate],
+      deactivate: endpoints?.[endpoint?.update?.deactivate],
+      bulkActivate: endpoints?.[endpoint?.bulkUpdate?.activate],
+      bulkDeactivate: endpoints?.[endpoint?.bulkUpdate?.deactivate],
+    };
+
     if (record && !Array.isArray(records)) {
-      return putUpdateStatus(null, {
-        url: record?.isActive
-          ? withParams(endpoints?.[endpoint?.update?.deactivate], { id: record?.id })
-          : withParams(endpoints?.[endpoint?.update?.activate], { id: record?.id }),
-      });
+      return putUpdateStatus({ id: [record?.id] }, { url: actions?.[action] });
     }
 
     if (!record && Array.isArray(records)) {
-      return putBulkUpdateStatus();
+      return putBulkUpdateStatus({ id: records.map((record) => record.id) }, { url: actions?.[action] });
     }
   });
 

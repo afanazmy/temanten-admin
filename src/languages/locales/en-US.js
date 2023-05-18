@@ -28,6 +28,7 @@ export const enUSCommonLocale = {
   'common.Reset': 'Reset',
   'common.Status': 'Status',
   'common.All': 'All',
+  'common.Selected': 'Selected',
   'common.Active': 'Active',
   'common.Inactive': 'Inactive',
   'common.Activate': 'Activate',
