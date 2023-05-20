@@ -198,7 +198,7 @@ export const useTable = (service, options, plugins) => {
  * @typedef {{activate: Endpoints, deactivate: Endpoints, delete: Endpoints, restore: Endpoints}} Endpoint
  *
  * @typedef {Object} UpdateStatus
- * @property {{update: Endpoint, bulkUpdate: Endpoint}} endpoint
+ * @property {{update: Endpoint, bulkUpdate: Endpoint, clear: Endpoints, restore: Endpoints}} endpoint
  * @property {() => void} refresh
  * @property {() => void} onResetSelection
  *
@@ -232,6 +232,8 @@ export const useUpdateStatus = ({ endpoint, refresh, onResetSelection }) => {
       delete: endpoints?.[endpoint?.update?.delete],
       bulkRestore: endpoints?.[endpoint?.bulkUpdate?.restore],
       bulkDelete: endpoints?.[endpoint?.bulkUpdate?.delete],
+      clear: endpoints?.[endpoint.clear],
+      restoreAll: endpoints?.[endpoint.restore],
     };
 
     const methods = {
@@ -243,10 +245,11 @@ export const useUpdateStatus = ({ endpoint, refresh, onResetSelection }) => {
       delete: 'delete',
       bulkRestore: 'put',
       bulkDelete: 'delete',
+      clear: 'delete',
+      restoreAll: 'put',
     };
 
     if (record && !Array.isArray(records)) {
-      console.log(methods?.[action], action);
       return putUpdateStatus({ id: [record?.id] }, { url: actions?.[action], method: methods?.[action] });
     }
 
@@ -256,6 +259,8 @@ export const useUpdateStatus = ({ endpoint, refresh, onResetSelection }) => {
         { url: actions?.[action], method: methods?.[action] },
       );
     }
+
+    return putUpdateStatus(null, { url: actions?.[action], method: methods?.[action] });
   });
 
   return { updateStatus, loading: loadingUpdateStatus || loadingBulkUpdateStatus || false };

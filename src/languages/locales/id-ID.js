@@ -47,5 +47,6 @@ export const idIDCommonLocale = {
   'common.Download Template': 'Download Template',
   'common.Upload': 'Upload',
   'common.Select File': 'Pilih File',
+  'common.Clear': 'Bersihkan',
   'common.Dashboard': 'Beranda',
 };

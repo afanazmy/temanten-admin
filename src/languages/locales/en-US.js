@@ -47,5 +47,6 @@ export const enUSCommonLocale = {
   'common.Download Template': 'Download Template',
   'common.Upload': 'Upload',
   'common.Select File': 'Select File',
+  'common.Clear': 'Clear',
   'common.Dashboard': 'Dashboard',
 };

@@ -1,7 +1,7 @@
 import { Form } from 'antd';
 import { useRef } from 'react';
 import { paths } from 'routes';
-import { Upload } from 'assets';
+import { Restore, Trash, Upload } from 'assets';
 import { useCreation } from 'ahooks';
 import Icon from '@ant-design/icons';
 import { FormattedMessage, ModuleBar, Table } from 'components';
@@ -14,23 +14,9 @@ import { useInvitationFetch } from '../invitation.api';
 import { InvitationImportDrawer } from '../invitation-components';
 
 const InvitationPage = () => {
-  const drawerImport = useRef();
-
-  usePage({
-    title: 'invitation.Invitation',
-    activeMenu: paths.invitation,
-    extraMenu: [
-      {
-        key: 'import',
-        icon: <Icon component={Upload} />,
-        onClick: () => drawerImport?.current?.onOpen?.(),
-        label: <FormattedMessage id="invitation.Import Invitation" />,
-      },
-    ],
-  });
-
   const drawerAdd = useRef();
   const drawerUpdate = useRef();
+  const drawerImport = useRef();
   const [form] = Form.useForm();
 
   const [canAdd, canUpdate, canDelete] = usePermission({
@@ -38,6 +24,7 @@ const InvitationPage = () => {
   });
 
   const fetch = useInvitationFetch();
+
   const {
     onFinishFilter,
     loading: loadingGetInvitations,
@@ -48,6 +35,8 @@ const InvitationPage = () => {
 
   const { updateStatus, loading: loadingUpdateStatus } = useUpdateStatus({
     endpoint: {
+      clear: 'clearInvitations',
+      restore: 'restoreAllInvitations',
       update: { restore: 'restoreInvitation', delete: 'deleteInvitation' },
       bulkUpdate: { restore: 'restoreInvitations', delete: 'deleteInvitations' },
     },
@@ -65,6 +54,31 @@ const InvitationPage = () => {
       }),
     [canUpdate, canDelete],
   );
+
+  usePage({
+    title: 'invitation.Invitation',
+    activeMenu: paths.invitation,
+    extraMenu: [
+      {
+        key: 'import',
+        icon: <Icon component={Upload} />,
+        onClick: () => drawerImport?.current?.onOpen?.(),
+        label: <FormattedMessage id="invitation.Import Invitation" />,
+      },
+      {
+        key: 'clear',
+        icon: <Icon component={Trash} />,
+        onClick: () => updateStatus({ action: 'clear' }),
+        label: <FormattedMessage id="common.Clear" />,
+      },
+      {
+        key: 'restore',
+        icon: <Icon component={Restore} />,
+        onClick: () => updateStatus({ action: 'restoreAll' }),
+        label: <FormattedMessage id="common.Restore" />,
+      },
+    ],
+  });
 
   return (
     <>
