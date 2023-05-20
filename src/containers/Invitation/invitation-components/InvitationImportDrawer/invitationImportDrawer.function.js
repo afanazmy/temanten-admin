@@ -1,4 +1,6 @@
 import { useRequest } from 'ahooks';
+import { downloadBlob } from 'helpers';
+
 import { useInvitationFetch } from 'containers/Invitation/invitation.api';
 
 export const useInvitationImportDrawerController = ({ onClose, refresh }) => {
@@ -8,15 +10,7 @@ export const useInvitationImportDrawerController = ({ onClose, refresh }) => {
     fetch.getTemplateInvitation,
     {
       manual: true,
-      onSuccess: (response) => {
-        const url = URL.createObjectURL(response);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'invitation_template.xlsx';
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-      },
+      onSuccess: (response) => downloadBlob(response, { fileName: 'invitation_template.xlsx' }),
     },
   );
 

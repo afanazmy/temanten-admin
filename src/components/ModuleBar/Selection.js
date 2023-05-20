@@ -6,7 +6,7 @@ import { Divider, Dropdown, Grid, Typography } from 'antd';
 
 const { Text } = Typography;
 
-const Selection = ({ selectedRows, canUpdateStatus, canDelete, updateStatus }) => {
+const Selection = ({ selectedRows, canUpdateStatus, canDelete, updateStatus, selectionMenu = [] }) => {
   const { md } = Grid.useBreakpoint();
 
   const onUpdateStatus = (action) => {
@@ -19,6 +19,7 @@ const Selection = ({ selectedRows, canUpdateStatus, canDelete, updateStatus }) =
       if (!canUpdateStatus) return [];
 
       return [
+        ...selectionMenu,
         {
           key: 'bulkActivate',
           icon: <Icon component={Restore} />,
@@ -33,7 +34,7 @@ const Selection = ({ selectedRows, canUpdateStatus, canDelete, updateStatus }) =
         },
       ];
     },
-    [canUpdateStatus, selectedRows],
+    [canUpdateStatus, selectedRows, selectionMenu],
   );
 
   const deleteMenu = useCreation(
@@ -42,6 +43,7 @@ const Selection = ({ selectedRows, canUpdateStatus, canDelete, updateStatus }) =
       if (!canDelete) return [];
 
       return [
+        ...selectionMenu,
         {
           key: 'bulkRestore',
           icon: <Icon component={Restore} />,
@@ -56,7 +58,7 @@ const Selection = ({ selectedRows, canUpdateStatus, canDelete, updateStatus }) =
         },
       ];
     },
-    [canDelete, selectedRows],
+    [canDelete, selectedRows, selectionMenu],
   );
 
   const content = useCreation(

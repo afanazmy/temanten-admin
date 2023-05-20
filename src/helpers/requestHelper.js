@@ -95,6 +95,16 @@ export const getAllQuery = (data = {}) => {
   return query;
 };
 
+export const downloadBlob = (response, { fileName }) => {
+  const url = URL.createObjectURL(response);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+};
+
 export const dateFormat = {
   API: 'YYYY-MM-DD',
   display: 'DD MMM YYYY',

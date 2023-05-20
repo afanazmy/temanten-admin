@@ -10,6 +10,7 @@ export const enUSInvitationLocale = {
     "To mark that this invitation is addressed to the family, so the receptionist can know if the invitation holder is the bride and groom's family.",
   'invitation.Import Invitation': 'Import Invitation',
   'invitation.Replace existing invitation': 'Replace existing invitation',
+  'invitation.Export QR Code': 'Export QR Code',
 };
 
 export const idIDInvitationLocale = {
@@ -24,4 +25,5 @@ export const idIDInvitationLocale = {
     'Untuk menandai bahwa undangan ini ditujukan kepada keluarga, jadi resepsionis bisa tahu kalau pemegang undangan adalah keluarga mempelai.',
   'invitation.Import Invitation': 'Impor Undangan',
   'invitation.Replace existing invitation': 'Replace undangan yang ada',
+  'invitation.Export QR Code': 'Expor QR Code',
 };

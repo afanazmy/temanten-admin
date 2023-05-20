@@ -32,6 +32,7 @@ const endpoints = {
   clearInvitations: 'invitations/clear',
   downloadTemplateInvitation: 'invitations/download-template',
   importInvitation: 'invitations/import-template',
+  exportQRInvitations: 'invitations/qr-code/export',
 };
 
 export default endpoints;

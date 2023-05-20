@@ -1,5 +1,6 @@
 import { Tag } from 'antd';
 import { FormattedMessage, IsActive, TableAction } from 'components';
+import { downloadBlob } from 'helpers';
 
 export const columns = ({ canUpdate, onUpdate, onUpdateStatus, canDelete }) => {
   /** @type {import('antd').TableProps['columns']} */
@@ -64,4 +65,8 @@ export const useInvitationController = ({ onFinish }) => {
   const _onFinish = (values) => onFinish(values);
 
   return { _onFinish };
+};
+
+export const onSuccessExportQRCode = (response) => {
+  downloadBlob(response, { fileName: 'qr_codes.zip' });
 };

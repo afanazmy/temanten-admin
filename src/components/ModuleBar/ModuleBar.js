@@ -26,6 +26,7 @@ import FilterValue from './FilterValue';
  * @property {Filter[]} filters
  * @property {String[]} selectedRows
  * @property {(params: {records: Object[]}) => void} updateStatus
+ * @property {import('antd').MenuProps['items']} selectionMenu
  *
  * @param {ModuleBarProps} props
  * @returns
@@ -42,6 +43,7 @@ const ModuleBar = ({
   canUpdateStatus,
   selectedRows,
   updateStatus,
+  selectionMenu,
 }) => {
   const { token } = theme.useToken();
   const { ModuleBar } = token || {};
@@ -80,6 +82,7 @@ const ModuleBar = ({
             canDelete={canDelete}
             selectedRows={selectedRows}
             updateStatus={updateStatus}
+            selectionMenu={selectionMenu}
             canUpdateStatus={canUpdateStatus}
           />
         </Space>

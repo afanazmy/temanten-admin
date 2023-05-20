@@ -21,6 +21,11 @@ export const useInvitationFetch = ({ id } = {}) => {
   const postTemplateInvitation = useAPI(endpoints.importInvitation, { method: 'post', showMessage: true });
   const clearInvitation = useAPI(endpoints.clearInvitations, { method: 'delete', showMessage: true });
   const restoreInvitation = useAPI(endpoints.restoreAllInvitations, { method: 'put', showMessage: true });
+  const exportQRInvitation = useAPI(endpoints.exportQRInvitations, {
+    method: 'post',
+    showMessage: true,
+    responseType: 'blob',
+  });
 
   return {
     getInvitations,
@@ -35,5 +40,6 @@ export const useInvitationFetch = ({ id } = {}) => {
     postTemplateInvitation,
     clearInvitation,
     restoreInvitation,
+    exportQRInvitation,
   };
 };

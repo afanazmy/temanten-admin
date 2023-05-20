@@ -2,14 +2,14 @@ import { Form } from 'antd';
 import { useRef } from 'react';
 import { paths } from 'routes';
 import { Restore, Trash, Upload } from 'assets';
-import { useCreation } from 'ahooks';
-import Icon from '@ant-design/icons';
+import { useCreation, useRequest } from 'ahooks';
 import { FormattedMessage, ModuleBar, Table } from 'components';
+import Icon, { LoadingOutlined, QrcodeOutlined } from '@ant-design/icons';
 import { usePage, usePermission, useTable, useUpdateStatus } from 'hooks';
 
 import InvitationAdd from '../InvitationAdd';
 import InvitationUpdate from '../InvitationUpdate';
-import { columns } from '../invitation.function';
+import { columns, onSuccessExportQRCode } from '../invitation.function';
 import { useInvitationFetch } from '../invitation.api';
 import { InvitationImportDrawer } from '../invitation-components';
 
@@ -42,6 +42,11 @@ const InvitationPage = () => {
     },
     refresh,
     onResetSelection,
+  });
+
+  const { run: exportQRInvitation, loading: loadingExportQR } = useRequest(fetch.exportQRInvitation, {
+    manual: true,
+    onSuccess: onSuccessExportQRCode,
   });
 
   const _columns = useCreation(
@@ -92,6 +97,14 @@ const InvitationPage = () => {
         loading={loadingGetInvitations || loadingUpdateStatus}
         selectedRows={tableProps?.rowSelection?.selectedRows}
         filters={[{ name: 'deleted', label: 'common.Deleted', type: 'deleted' }]}
+        selectionMenu={[
+          {
+            key: 'exportQRCode',
+            label: <FormattedMessage id="invitation.Export QR Code" />,
+            icon: loadingExportQR ? <LoadingOutlined /> : <QrcodeOutlined />,
+            onClick: () => exportQRInvitation({ id: tableProps.rowSelection.selectedRowKeys }),
+          },
+        ]}
       />
 
       <Table {...tableProps} columns={_columns} rowKey="id" />
