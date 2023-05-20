@@ -61,7 +61,7 @@ const Selection = ({ selectedRows, canUpdateStatus, canDelete, updateStatus }) =
 
   const content = useCreation(
     () => (
-      <div>
+      <div className="selection">
         <Divider type="vertical" />
 
         <Text type="secondary">
@@ -74,9 +74,19 @@ const Selection = ({ selectedRows, canUpdateStatus, canDelete, updateStatus }) =
 
   if (!md || !selectedRows?.length) return null;
 
-  if (canDelete) return <Dropdown menu={{ items: deleteMenu }}>{content}</Dropdown>;
+  if (canDelete) {
+    return (
+      <Dropdown trigger="click" menu={{ items: deleteMenu }}>
+        {content}
+      </Dropdown>
+    );
+  }
 
-  return <Dropdown menu={{ items: statusMenu }}>{content}</Dropdown>;
+  return (
+    <Dropdown trigger="click" menu={{ items: statusMenu }}>
+      {content}
+    </Dropdown>
+  );
 };
 
 export default Selection;

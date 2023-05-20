@@ -27,8 +27,8 @@ const MasterLayoutPage = () => {
   const { loadingGetAuthUser, breadcrumbItems } = useMasterLayoutController({ title });
 
   const header = '72px';
-  const padding = '14px';
-  const margin = '6px';
+  const padding = md ? '14px' : '0px';
+  const margin = md ? '6px' : '0px';
 
   if (loadingGetAuthUser) {
     return (
@@ -63,8 +63,8 @@ const MasterLayoutPage = () => {
         <Content
           style={{
             padding,
-            margin: `${margin} 14px`,
             background: colorBgContainer,
+            margin: `${margin} ${md ? '14px' : '0px'}`,
             minHeight: `calc(100vh - ${header} - ${padding} - ${margin})`,
           }}
         >
