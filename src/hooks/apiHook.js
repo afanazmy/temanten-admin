@@ -32,19 +32,20 @@ export const useAPI = (endpoint, config = {}) => {
     return instance;
   }, [config]);
 
-  const method = config.method || 'get';
-  const onlyTwoParams = method === 'get' || method === 'delete';
-
   /**
    * @param {Object} param
    * @param {import('axios').AxiosRequestConfig} _config override default config on API call
    * @returns
    */
   const request = useMemoizedFn((params, _config = {}) => {
+    const __config = { ...config, ..._config };
+    const method = __config.method || 'get';
+    const onlyTwoParams = method === 'get' || method === 'delete';
+
     return instance?.[method]?.(
       _config?.url || endpoint || config?.url,
-      onlyTwoParams ? { ...config, ..._config, params } : params,
-      { ...config, ..._config },
+      onlyTwoParams ? { ...__config, params } : params,
+      __config,
     );
   });
 
@@ -61,6 +62,7 @@ export const useAPI = (endpoint, config = {}) => {
  * @property {() => void} onFilter
  * @property {() => void} onReload
  * @property {() => void} onResetFilter
+ * @property {() => void} onResetSelection
  * @property {(data: Object) => void} onFinishFilter
  * @property {import('antd').TableProps} tableProps
  *
@@ -111,6 +113,8 @@ export const useTable = (service, options, plugins) => {
 
   /** untuk button reload */
   const onReload = rest.refresh;
+
+  const onResetSelection = useMemoizedFn(() => setSelectedRows({ rows: [], keys: [] }));
 
   /** @type {import('antd').TableProps['rowSelection']} */
   const rowSelection = {
@@ -181,6 +185,7 @@ export const useTable = (service, options, plugins) => {
     onReload,
     onResetFilter,
     onFinishFilter,
+    onResetSelection,
     sorts: table.sorts,
     params: _params,
     tableProps,
@@ -188,22 +193,33 @@ export const useTable = (service, options, plugins) => {
 };
 
 /**
+ * @typedef {keyof import('configuration')['endpoints']} Endpoints
+ *
+ * @typedef {{activate: Endpoints, deactivate: Endpoints, delete: Endpoints, restore: Endpoints}} Endpoint
+ *
  * @typedef {Object} UpdateStatus
- * @property {{update: {activate: keyof import('configuration')['endpoints'], deactivate: keyof import('configuration')['endpoints']}, bulkUpdate: {activate: keyof import('configuration')['endpoints'], deactivate: keyof import('configuration')['endpoints']}}} endpoint
+ * @property {{update: Endpoint, bulkUpdate: Endpoint}} endpoint
  * @property {() => void} refresh
+ * @property {() => void} onResetSelection
  *
  * @param {UpdateStatus} param
  */
-export const useUpdateStatus = ({ endpoint, refresh }) => {
+export const useUpdateStatus = ({ endpoint, refresh, onResetSelection }) => {
   const updateService = useAPI(endpoints?.[endpoint?.update?.activate], { method: 'put', showMessage: true });
   const { loading: loadingUpdateStatus, run: putUpdateStatus } = useRequest(updateService, {
     manual: true,
-    onSuccess: () => refresh?.(),
+    onSuccess: () => {
+      onResetSelection?.();
+      refresh?.();
+    },
   });
 
   const { loading: loadingBulkUpdateStatus, run: putBulkUpdateStatus } = useRequest(updateService, {
     manual: true,
-    onSuccess: () => refresh?.(),
+    onSuccess: () => {
+      onResetSelection?.();
+      refresh?.();
+    },
   });
 
   const updateStatus = useMemoizedFn(({ record, records, action }) => {
@@ -212,14 +228,33 @@ export const useUpdateStatus = ({ endpoint, refresh }) => {
       deactivate: endpoints?.[endpoint?.update?.deactivate],
       bulkActivate: endpoints?.[endpoint?.bulkUpdate?.activate],
       bulkDeactivate: endpoints?.[endpoint?.bulkUpdate?.deactivate],
+      restore: endpoints?.[endpoint?.update?.restore],
+      delete: endpoints?.[endpoint?.update?.delete],
+      bulkRestore: endpoints?.[endpoint?.bulkUpdate?.restore],
+      bulkDelete: endpoints?.[endpoint?.bulkUpdate?.delete],
+    };
+
+    const methods = {
+      activate: 'put',
+      deactivate: 'put',
+      bulkActivate: 'put',
+      bulkDeactivate: 'put',
+      restore: 'put',
+      delete: 'delete',
+      bulkRestore: 'put',
+      bulkDelete: 'delete',
     };
 
     if (record && !Array.isArray(records)) {
-      return putUpdateStatus({ id: [record?.id] }, { url: actions?.[action] });
+      console.log(methods?.[action], action);
+      return putUpdateStatus({ id: [record?.id] }, { url: actions?.[action], method: methods?.[action] });
     }
 
     if (!record && Array.isArray(records)) {
-      return putBulkUpdateStatus({ id: records.map((record) => record.id) }, { url: actions?.[action] });
+      return putBulkUpdateStatus(
+        { id: records.map((record) => record.id) },
+        { url: actions?.[action], method: methods?.[action] },
+      );
     }
   });
 

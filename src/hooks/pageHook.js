@@ -13,10 +13,11 @@ import { useAppProvider } from './appHook';
  * @property {import('components/Intl/FormattedMessage').IFormattedMessage['id']} title id language nya bukan hasil akhirnya
  * @property {String} activeMenu
  * @property {Array} openKeys
+ * @property {import('antd').MenuProps['items']} extraMenu
  *
  * @param {Page} param
  */
-export const usePage = ({ title, activeMenu, openKeys } = {}) => {
+export const usePage = ({ title, activeMenu, openKeys, extraMenu } = {}) => {
   const [_title, _setTitle] = useState(title || document.title);
 
   const { formatMessage } = useIntl();
@@ -26,7 +27,7 @@ export const usePage = ({ title, activeMenu, openKeys } = {}) => {
 
   useMount(() => {
     if (!activeMenu) return;
-    setApp({ title, activeMenu, openKeys });
+    setApp({ title, activeMenu, openKeys, extraMenu });
   });
 
   /**

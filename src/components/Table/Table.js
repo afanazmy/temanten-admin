@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { useCreation } from 'ahooks';
 import { Table as AntTable, Grid } from 'antd';
+
 import ExpandedRowRender from './ExpandedRowRender';
 
 /**
@@ -31,7 +32,12 @@ const Table = (props) => {
   );
 
   return (
-    <AntTable {...props} expandable={expandable} className={classNames('default-table', { mobile }, props.className)} />
+    <AntTable
+      {...props}
+      expandable={expandable}
+      scroll={{ ...props.scroll, x: 'max-content' }}
+      className={classNames('default-table', { mobile }, props.className)}
+    />
   );
 };
 

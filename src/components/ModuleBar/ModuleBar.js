@@ -53,8 +53,19 @@ const ModuleBar = ({
     drawerAdd?.current?.onOpen?.();
   };
 
+  const _onFinishFilter = (values) => {
+    let _values = { ...values, showDeleted: null, onlyDeleted: null };
+
+    if (_values.deleted) {
+      _values = { ...values, showDeleted: null, onlyDeleted: null, [_values.deleted]: 1 };
+    }
+
+    delete _values.deleted;
+    onFinishFilter?.(_values);
+  };
+
   return (
-    <Form form={form} layout="vertical" onFinish={onFinishFilter}>
+    <Form form={form} layout="vertical" onFinish={_onFinishFilter}>
       <div ref={container} className="module-bar" style={{ backgroundColor: ModuleBar?.colorBgContainer }}>
         <Space size={8}>
           {canAdd ? (

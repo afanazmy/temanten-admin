@@ -53,12 +53,12 @@ const TableAction = ({
         key: 'delete',
         icon: <Icon component={deletedAt ? Restore : Trash} />,
         label: <FormattedMessage id={deletedAt ? 'common.Restore' : 'common.Delete'} />,
-        onClick: () => onUpdateStatus?.({ record, action: deletedAt === 1 ? 'restore' : 'delete' }),
+        onClick: () => onUpdateStatus?.({ record, action: deletedAt ? 'restore' : 'delete' }),
       });
     }
 
     return items;
-  }, [canUpdate, canUpdateStatus, isActive]);
+  }, [canUpdate, canUpdateStatus, isActive, deletedAt]);
 
   if (items?.length === 0) return null;
 

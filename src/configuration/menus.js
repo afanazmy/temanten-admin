@@ -1,8 +1,8 @@
 import { paths } from 'routes';
-import { Gauge, User } from 'assets';
 import Icon from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'components';
+import { Envelope, Gauge, User } from 'assets';
 
 /**
  * @typedef {{
@@ -49,6 +49,15 @@ export const sidebarMenus = ({ user } = {}) => {
         </Link>
       ),
       icon: <Icon component={User} />,
+    },
+    {
+      key: paths.invitation,
+      label: (
+        <Link to={paths.invitation}>
+          <FormattedMessage id="invitation.Invitation" />
+        </Link>
+      ),
+      icon: <Icon component={Envelope} />,
     },
   ];
 

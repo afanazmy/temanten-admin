@@ -39,7 +39,7 @@ const Selection = ({ selectedRows, canUpdateStatus, canDelete, updateStatus }) =
   const deleteMenu = useCreation(
     /** @returns {import('antd').MenuProps['items']} */
     () => {
-      if (!canUpdateStatus) return [];
+      if (!canDelete) return [];
 
       return [
         {
@@ -56,7 +56,7 @@ const Selection = ({ selectedRows, canUpdateStatus, canDelete, updateStatus }) =
         },
       ];
     },
-    [canUpdateStatus, selectedRows],
+    [canDelete, selectedRows],
   );
 
   const content = useCreation(

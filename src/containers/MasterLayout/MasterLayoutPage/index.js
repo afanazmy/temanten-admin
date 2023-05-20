@@ -1,12 +1,12 @@
 import { envs } from 'utils';
-import { imgPaths } from 'assets';
 import { useCreation } from 'ahooks';
 import { useAppProvider } from 'hooks';
 import { Outlet } from 'react-router-dom';
 import { sidebarMenus } from 'configuration';
 import { FormattedMessage } from 'react-intl';
-import { LoadingOutlined } from '@ant-design/icons';
-import { Breadcrumb, Grid, Layout, Menu, Result, theme, Typography } from 'antd';
+import { DotsThreeVertical, imgPaths } from 'assets';
+import Icon, { LoadingOutlined } from '@ant-design/icons';
+import { Breadcrumb, Button, Dropdown, Grid, Layout, Menu, Result, theme, Typography } from 'antd';
 
 import MasterLayoutDrawer from '../MasterLayoutDrawer';
 import { useMasterLayoutController } from '../masterLayout.function';
@@ -23,7 +23,7 @@ const MasterLayoutPage = () => {
   const { md } = Grid.useBreakpoint();
   const menuItems = useCreation(() => sidebarMenus(), []);
 
-  const { title, activeMenu } = app || {};
+  const { title, activeMenu, extraMenu } = app || {};
   const { loadingGetAuthUser, breadcrumbItems } = useMasterLayoutController({ title });
 
   const header = '72px';
@@ -58,6 +58,12 @@ const MasterLayoutPage = () => {
           {!md ? <MasterLayoutDrawer /> : null}
 
           <Breadcrumb items={breadcrumbItems} />
+
+          {extraMenu ? (
+            <Dropdown menu={{ items: extraMenu }} trigger="click">
+              <Button className="btn-extra btn-snow-ui" type="text" icon={<Icon component={DotsThreeVertical} />} />
+            </Dropdown>
+          ) : null}
         </Header>
 
         <Content

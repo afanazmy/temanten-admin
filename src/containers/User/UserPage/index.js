@@ -27,7 +27,8 @@ const UserPage = () => {
     loading: loadingGetUsers,
     tableProps,
     refresh,
-  } = useTable(fetch.getUsers, { form, showSelection: true });
+    onResetSelection,
+  } = useTable(fetch.getUsers, { form, showSelection: canUpdateStatus });
 
   const { updateStatus, loading: loadingUpdateStatus } = useUpdateStatus({
     endpoint: {
@@ -35,6 +36,7 @@ const UserPage = () => {
       bulkUpdate: { activate: 'activateUsers', deactivate: 'deactivateUsers' },
     },
     refresh,
+    onResetSelection,
   });
 
   const _columns = useCreation(

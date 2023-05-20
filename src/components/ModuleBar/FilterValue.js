@@ -18,7 +18,13 @@ const FilterValue = ({ form, filters }) => {
       1: <FormattedMessage id="common.Active" />,
     };
 
+    const deleted = {
+      showDeleted: <FormattedMessage id="common.Show" />,
+      onlyDeleted: <FormattedMessage id="common.Only Deleted" />,
+    };
+
     if (type === 'status') return status?.[value];
+    if (type === 'deleted') return deleted?.[value];
     return value;
   };
 

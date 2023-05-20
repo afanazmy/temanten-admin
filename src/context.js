@@ -10,6 +10,7 @@ export const initialContextValues = {
     title: null,
     activeMenu: null,
     openKeys: undefined,
+    extraMenu: null,
   },
   setApp: (app) => {},
 };

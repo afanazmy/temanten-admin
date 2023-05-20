@@ -9,18 +9,20 @@ import { genIsActiveStyle } from './isActive.style';
  * @param {React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>} props
  * @returns
  */
-const IsActive = ({ isActive, ...props }) => {
+const IsActive = ({ isActive, deletedAt, ...props }) => {
   const prefixCls = 'snow-ui-is-active';
   const { theme, token, hashId } = _theme.useToken();
   const wrapSSR = useStyleRegister({ theme, token, hashId, path: [prefixCls] }, () => [
     genIsActiveStyle(prefixCls, token),
   ]);
 
+  const _isActive = deletedAt ? 0 : 1;
+
   const isActives = {
     0: { label: <FormattedMessage id="common.Inactive" />, className: 'inactive' },
     1: { label: <FormattedMessage id="common.Active" />, className: 'active' },
   };
-  const { label, className } = isActives?.[isActive] || {};
+  const { label, className } = deletedAt !== undefined ? isActives?.[_isActive] : isActives?.[isActive] || {};
 
   return wrapSSR(
     <div {...props} className={classNames(prefixCls, hashId, props.className, className)}>

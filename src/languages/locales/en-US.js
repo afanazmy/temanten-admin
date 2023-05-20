@@ -1,4 +1,6 @@
 export const enUSCommonLocale = {
+  'common.Yes': 'Yes',
+  'common.No': 'No',
   'common.Success': 'Success',
   'common.Error': 'Error',
   'common.Invalid': 'Invalid',
@@ -15,6 +17,7 @@ export const enUSCommonLocale = {
   'common.Copy server response': 'Copy server response',
   'common.Show more': 'Show more',
   'common.Add {name} details': 'Add {name} details',
+  'common.Name': 'Name',
   'common.Username': 'Username',
   'common.Password': 'Password',
   'common.Confirm Password': 'Confirm Password',
@@ -36,5 +39,13 @@ export const enUSCommonLocale = {
   'common.Update': 'Update',
   'common.Delete': 'Delete',
   'common.Restore': 'Restore',
+  'common.Hide': 'Hide',
+  'common.Default': 'Default',
+  'common.Deleted': 'Deleted',
+  'common.Show': 'Show',
+  'common.Only Deleted': 'Only Deleted',
+  'common.Download Template': 'Download Template',
+  'common.Upload': 'Upload',
+  'common.Select File': 'Select File',
   'common.Dashboard': 'Dashboard',
 };

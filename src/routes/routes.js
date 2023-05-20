@@ -10,6 +10,7 @@ const MasterLayout = React.lazy(() => import('containers/MasterLayout/MasterLayo
 const LoadUserData = React.lazy(() => import('containers/LoadUserData/LoadUserDataPage'));
 const Dashboard = React.lazy(() => import('containers/Dashboard/DashboardPage'));
 const User = React.lazy(() => import('containers/User/UserPage'));
+const Invitation = React.lazy(() => import('containers/Invitation/InvitationPage'));
 
 /**
  * @type {Array.<import('react-router-dom').RouteObject>}
@@ -75,6 +76,17 @@ const routes = [
           <PrivateRoute>
             <Loadable>
               <User />
+            </Loadable>
+          </PrivateRoute>
+        ),
+      },
+
+      {
+        path: paths.invitation,
+        element: (
+          <PrivateRoute>
+            <Loadable>
+              <Invitation />
             </Loadable>
           </PrivateRoute>
         ),

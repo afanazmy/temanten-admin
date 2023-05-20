@@ -1,8 +1,8 @@
 import { paths } from 'routes';
 import { OptionalField } from 'components';
 import { removeDataForLogout } from 'helpers';
-import { notification, Typography } from 'antd';
 import { CheckOutlined } from '@ant-design/icons';
+import { message, notification, Typography } from 'antd';
 
 import { envs } from './envs';
 import { getToken } from './auth';
@@ -13,7 +13,7 @@ export const apiBaseUrl = (baseURL) => baseURL ?? envs('REACT_APP_API_URL');
 
 export const withParams = (endpoint, params = {}) => {
   let str = endpoint;
-  Object.keys(params).map((key) => (str = str.replace(`:${key}`, params[key])));
+  Object.keys(params).map((key) => (str = str?.replace?.(`:${key}`, params[key])));
   return str;
 };
 
@@ -46,13 +46,13 @@ export const interceptors = {
      * @param {{raw: Boolean, showMessage: Boolean, intl: import('languages')['intl']}} param
      */
     onSuccess: (response, { raw, showMessage, intl }) => {
-      const message = response?.data?.message;
+      const _message = response?.data?.message;
       if (!showMessage && !raw) return response?.data;
       if (!showMessage && raw) return response;
-      if (!message && !raw) return response?.data;
-      if (!message && raw) return response;
+      if (!_message && !raw) return response?.data;
+      if (!_message && raw) return response;
 
-      notification.success({ message: intl?.({ id: 'common.Success' }), description: message });
+      message.success(_message);
 
       if (raw) return response;
       return response?.data;

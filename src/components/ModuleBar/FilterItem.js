@@ -19,6 +19,23 @@ const FilterItem = ({ filterType, form, ...props }) => {
     );
   }
 
+  if (filterType === 'deleted') {
+    return (
+      <Segmented
+        {...props}
+        onChange={(value) => {
+          props?.onChange?.(value);
+          form?.submit?.();
+        }}
+        options={[
+          { label: <FormattedMessage id="common.Hide" />, value: '' },
+          { label: <FormattedMessage id="common.Show" />, value: 'showDeleted' },
+          { label: <FormattedMessage id="common.Only Deleted" />, value: 'onlyDeleted' },
+        ]}
+      />
+    );
+  }
+
   return (
     <Input
       {...props}

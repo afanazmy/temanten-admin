@@ -6,6 +6,7 @@ import { enUSMasterLayoutLocale } from 'containers/MasterLayout/masterLayout.loc
 import { enUSLoadUserDataLocale } from 'containers/LoadUserData/loadUserData.locale';
 import { enUSDashboardLocale } from 'containers/Dashboard/dashboard.locale';
 import { enUSUserLocale } from 'containers/User/user.locale';
+import { enUSInvitationLocale } from 'containers/Invitation/invitation.locale';
 
 const EnLang = {
   messages: {
@@ -17,6 +18,7 @@ const EnLang = {
     ...enUSLoadUserDataLocale,
     ...enUSDashboardLocale,
     ...enUSUserLocale,
+    ...enUSInvitationLocale,
   },
   antd: antdEn,
   locale: 'en-US',

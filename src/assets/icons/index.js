@@ -1,11 +1,15 @@
 export { default as CircleNotch } from './CircleNotch';
 export { default as DotsThree } from './DotsThree';
+export { default as DotsThreeVertical } from './DotsThreeVertical';
+export { default as Download } from './Download';
 export { default as Funnel } from './Funnel';
 export { default as Gauge } from './Gauge';
+export { default as Envelope } from './Envelope';
 export { default as Pencil } from './Pencil';
 export { default as Plus } from './Plus';
 export { default as Restore } from './Restore';
 export { default as Search } from './Search';
 export { default as Sidebar } from './Sidebar';
-export { default as User } from './User';
 export { default as Trash } from './Trash';
+export { default as Upload } from './Upload';
+export { default as User } from './User';
