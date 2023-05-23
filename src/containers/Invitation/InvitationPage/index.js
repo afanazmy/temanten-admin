@@ -52,6 +52,7 @@ const InvitationPage = () => {
   const _columns = useCreation(
     () =>
       columns({
+        refresh,
         canUpdate,
         canDelete,
         onUpdate: (record) => drawerUpdate.current?.onOpen?.(record),

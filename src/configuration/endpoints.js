@@ -24,6 +24,7 @@ const endpoints = {
   getInvitation: 'invitations/:id',
   postInvitation: 'invitations',
   putInvitation: 'invitations/:id',
+  putSentInvitation: 'invitations/sent',
   restoreInvitation: 'invitations/restore',
   deleteInvitation: 'invitations/delete',
   restoreInvitations: 'invitations/restore',

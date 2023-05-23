@@ -1,13 +1,16 @@
 import { Tag } from 'antd';
-import { FormattedMessage, IsActive, TableAction } from 'components';
 import { downloadBlob } from 'helpers';
+import { FormattedMessage, IsActive, TableAction } from 'components';
 
-export const columns = ({ canUpdate, onUpdate, onUpdateStatus, canDelete }) => {
+import { InvitationRecipient } from './invitation-components';
+
+export const columns = ({ refresh, canUpdate, onUpdate, onUpdateStatus, canDelete }) => {
   /** @type {import('antd').TableProps['columns']} */
   const _columns = [
     {
       title: <FormattedMessage id="invitation.Recipient Name" />,
       dataIndex: 'recipientName',
+      render: (_t, record) => <InvitationRecipient refresh={refresh} record={record} />,
     },
     {
       title: <FormattedMessage id="invitation.Group" />,

@@ -7,6 +7,7 @@ export const useInvitationFetch = ({ id } = {}) => {
   const getInvitation = useAPI(withParams(endpoints.getInvitation, { id }));
   const postInvitation = useAPI(endpoints.postInvitation, { method: 'post', showMessage: true });
   const putInvitation = useAPI(withParams(endpoints.putInvitation, { id }), { method: 'put', showMessage: true });
+  const putSentInvitation = useAPI(endpoints.putSentInvitation, { method: 'put', showMessage: true });
   const activateInvitation = useAPI(withParams(endpoints.activateInvitation, { id }), {
     method: 'put',
     showMessage: true,
@@ -32,6 +33,7 @@ export const useInvitationFetch = ({ id } = {}) => {
     getInvitation,
     postInvitation,
     putInvitation,
+    putSentInvitation,
     activateInvitation,
     deactivateInvitation,
     activateInvitations,

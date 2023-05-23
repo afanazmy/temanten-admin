@@ -48,5 +48,7 @@ export const enUSCommonLocale = {
   'common.Upload': 'Upload',
   'common.Select File': 'Select File',
   'common.Clear': 'Clear',
+  'common.Whatsapp No.': 'Whatsapp No.',
+  'common.Add Whatsapp No.': 'Add Whatsapp No.',
   'common.Dashboard': 'Dashboard',
 };

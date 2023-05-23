@@ -1,5 +1,7 @@
+import { Trash } from 'assets';
 import { useEffect } from 'react';
-import { Form, Input, Radio } from 'antd';
+import Icon from '@ant-design/icons';
+import { Button, Form, Input, Radio } from 'antd';
 import { setFieldsError, validation } from 'helpers';
 import { FormattedMessage, HiddenSubmit } from 'components';
 
@@ -63,6 +65,45 @@ const InvitationForm = (props) => {
           </Radio.Button>
         </Radio.Group>
       </Form.Item>
+
+      <Form.List name="phoneNumbers">
+        {(fields, { add, remove }) => {
+          return (
+            <>
+              {fields.map((field) => (
+                <div key={`phone-${field.key}`} style={{ display: 'flex' }}>
+                  <Form.Item
+                    {...field}
+                    style={{ width: '100%' }}
+                    label={
+                      <>
+                        <FormattedMessage id="common.Whatsapp No." /> #{field.name + 1}
+                      </>
+                    }
+                    rules={[validation.required()]}
+                  >
+                    <Input prefix="+62" placeholder="89xxxxxxxxx" maxLength={13} />
+                  </Form.Item>
+
+                  <Button
+                    type="text"
+                    className="btn-snow-ui"
+                    icon={<Icon component={Trash} />}
+                    onClick={() => remove(field.name)}
+                    style={{ marginTop: 'auto', marginBottom: 26, marginLeft: 8 }}
+                  />
+                </div>
+              ))}
+
+              <div style={{ textAlign: 'center' }}>
+                <Button onClick={() => add()} type="dashed" disabled={fields?.length === 2}>
+                  <FormattedMessage id="common.Add Whatsapp No." />
+                </Button>
+              </div>
+            </>
+          );
+        }}
+      </Form.List>
 
       <HiddenSubmit />
     </Form>

@@ -11,6 +11,8 @@ export const enUSInvitationLocale = {
   'invitation.Import Invitation': 'Import Invitation',
   'invitation.Replace existing invitation': 'Replace existing invitation',
   'invitation.Export QR Code': 'Export QR Code',
+  'invitation.Send Invitation': 'Send Invitation',
+  'invitation.Do you want to send invitation to this number?': 'Do you want to send invitation to this number?',
 };
 
 export const idIDInvitationLocale = {
@@ -26,4 +28,6 @@ export const idIDInvitationLocale = {
   'invitation.Import Invitation': 'Impor Undangan',
   'invitation.Replace existing invitation': 'Replace undangan yang ada',
   'invitation.Export QR Code': 'Expor QR Code',
+  'invitation.Send Invitation': 'Kirim Undangan',
+  'invitation.Do you want to sent invitation to this number?': 'Apakah Anda ingin mengirim undangan ke nomor ini?',
 };

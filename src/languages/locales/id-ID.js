@@ -48,5 +48,7 @@ export const idIDCommonLocale = {
   'common.Upload': 'Upload',
   'common.Select File': 'Pilih File',
   'common.Clear': 'Bersihkan',
+  'common.Whatsapp No.': 'No. Whatsapp',
+  'common.Add Whatsapp No.': 'Tambah No. Whatsapp',
   'common.Dashboard': 'Beranda',
 };
