@@ -1,8 +1,8 @@
 import { useCreation } from 'ahooks';
 import { validation } from 'helpers';
 import { useAppProvider } from 'hooks';
-import { Button, Form, Input, Result, Space, Tabs } from 'antd';
 import { FormattedMessage, useIntl } from 'components';
+import { Button, DatePicker, Divider, Form, Input, Result, Space, Tabs } from 'antd';
 
 /**
  * @typedef {Object} IDrawerSetupForm
@@ -62,6 +62,137 @@ const DrawerSetupForm = ({ step, setStep, setupWizards, loadingSubmit, ...props 
         <Button type="primary" onClick={() => setStep(step + 1)}>
           <FormattedMessage id="common.Next" />
         </Button>
+      </>
+    ),
+    app: (
+      <>
+        <Divider orientation="left">
+          <FormattedMessage id="common.Bride" />
+        </Divider>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'bride']}
+          label={<FormattedMessage id="common.Fullname" />}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'bride_nickname']}
+          label={<FormattedMessage id="common.Nickname" />}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'bride_father']}
+          label={<FormattedMessage id="common.Father" />}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'bride_mother']}
+          label={<FormattedMessage id="common.Mother" />}
+        >
+          <Input />
+        </Form.Item>
+
+        <Divider orientation="left">
+          <FormattedMessage id="common.Groom" />
+        </Divider>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'groom']}
+          label={<FormattedMessage id="common.Fullname" />}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'groom_nickname']}
+          label={<FormattedMessage id="common.Nickname" />}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'groom_father']}
+          label={<FormattedMessage id="common.Father" />}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'groom_mother']}
+          label={<FormattedMessage id="common.Mother" />}
+        >
+          <Input />
+        </Form.Item>
+
+        <Divider orientation="left">
+          <FormattedMessage id="common.Akad" />
+        </Divider>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'akad_datetime']}
+          label={<FormattedMessage id="common.Date" />}
+        >
+          <DatePicker showTime format="DD MMM YYYY HH:mm" style={{ width: '100%' }} />
+        </Form.Item>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'akad_place']}
+          label={<FormattedMessage id="common.Place" />}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'akad_map']}
+          label={<FormattedMessage id="common.Map" />}
+        >
+          <Input />
+        </Form.Item>
+
+        <Divider orientation="left">
+          <FormattedMessage id="common.Reception" />
+        </Divider>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'reception_datetime']}
+          label={<FormattedMessage id="common.Date" />}
+        >
+          <DatePicker showTime format="DD MMM YYYY HH:mm" style={{ width: '100%' }} />
+        </Form.Item>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'reception_place']}
+          label={<FormattedMessage id="common.Place" />}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'reception_map']}
+          label={<FormattedMessage id="common.Map" />}
+        >
+          <Input />
+        </Form.Item>
       </>
     ),
     finish: (

@@ -25,6 +25,7 @@ export const theme = {
       Select: { controlItemBgActive: 'rgba(0, 0, 0, 0.05)' },
       Badge: { fontSize: 12 },
       Checkbox: { borderRadiusSM: 4 },
+      DatePicker: { controlItemBgActive: 'rgba(0, 0, 0, 0.05)' },
       ModuleBar: { colorBgContainer: '#F7F9FB' },
       Search: {
         colorBgContainer: 'rgba(255, 255, 255, 0.8)',
