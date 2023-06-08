@@ -67,5 +67,6 @@ export const idIDCommonLocale = {
   'common.Map': 'Peta',
   'common.Dresscode': 'Dresscode',
   'common.Invitation Wording': 'Invitation Wording',
+  'common.Available Variables': 'Variable yang Tersedia',
   'common.Dashboard': 'Beranda',
 };

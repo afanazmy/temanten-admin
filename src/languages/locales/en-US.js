@@ -67,5 +67,6 @@ export const enUSCommonLocale = {
   'common.Map': 'Map',
   'common.Dresscode': 'Dresscode',
   'common.Invitation Wording': 'Invitation Wording',
+  'common.Available Variables': 'Available Variables',
   'common.Dashboard': 'Dashboard',
 };

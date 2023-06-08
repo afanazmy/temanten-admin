@@ -34,6 +34,10 @@ const endpoints = {
   downloadTemplateInvitation: 'invitations/download-template',
   importInvitation: 'invitations/import-template',
   exportQRInvitations: 'invitations/qr-code/export',
+
+  // Setting
+  getSettings: 'settings',
+  getSetting: 'settings/show',
 };
 
 export default endpoints;

@@ -6,10 +6,21 @@ import DrawerSetupForm from './DrawerSetupForm';
 import { useDrawerSetupController } from '../signIn.function';
 
 const DrawerSetup = ({ setupWizards }, ref) => {
-  const { open, items, step, setStep, onOpen, onClose, onFinish, onFinishFailed, loadingPostSetupWizard } =
-    useDrawerSetupController({
-      setupWizards,
-    });
+  const {
+    open,
+    items,
+    step,
+    setStep,
+    onOpen,
+    onClose,
+    onFinish,
+    onFinishFailed,
+    loadingPostSetupWizard,
+    variables,
+    loadingVariables,
+  } = useDrawerSetupController({
+    setupWizards,
+  });
 
   useImperativeHandle(ref, () => ({ onOpen, onClose }));
 
@@ -30,8 +41,10 @@ const DrawerSetup = ({ setupWizards }, ref) => {
             step={step}
             setStep={setStep}
             onFinish={onFinish}
+            variables={variables}
             setupWizards={setupWizards}
             onFinishFailed={onFinishFailed}
+            loadingVariables={loadingVariables}
             loadingSubmit={loadingPostSetupWizard}
           />
         </Col>

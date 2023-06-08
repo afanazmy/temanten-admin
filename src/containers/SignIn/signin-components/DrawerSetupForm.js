@@ -2,7 +2,7 @@ import { useCreation } from 'ahooks';
 import { validation } from 'helpers';
 import { useAppProvider } from 'hooks';
 import { FormattedMessage, useIntl } from 'components';
-import { Button, DatePicker, Divider, Form, Input, Result, Space, Tabs } from 'antd';
+import { Button, DatePicker, Divider, Form, Input, Result, Space, Tabs, Tag } from 'antd';
 
 /**
  * @typedef {Object} IDrawerSetupForm
@@ -10,13 +10,15 @@ import { Button, DatePicker, Divider, Form, Input, Result, Space, Tabs } from 'a
  * @property {(current: Number) => void} setStep
  * @property {Array} setupWizards
  * @property {Boolean} loadingSubmit
+ * @property {String[]} variables
+ * @property {Boolean} loadingVariables
  *
  * @typedef {import('antd').FormProps & IDrawerSetupForm} DrawerSetupFormProps
  *
  * @param {DrawerSetupFormProps} props
  * @returns
  */
-const DrawerSetupForm = ({ step, setStep, setupWizards, loadingSubmit, ...props }) => {
+const DrawerSetupForm = ({ step, setStep, setupWizards, loadingSubmit, variables, loadingVariables, ...props }) => {
   const { app } = useAppProvider();
   const { language } = app || {};
 
@@ -192,6 +194,34 @@ const DrawerSetupForm = ({ step, setStep, setupWizards, loadingSubmit, ...props 
           label={<FormattedMessage id="common.Map" />}
         >
           <Input />
+        </Form.Item>
+
+        <Form.Item name={['app', 'dresscode']} label={<FormattedMessage id="common.Dresscode" />}>
+          <Input allowClear />
+        </Form.Item>
+
+        <Divider orientation="left">
+          <FormattedMessage id="invitation.Invitation" />
+        </Divider>
+
+        <Form.Item
+          rules={[validation.required()]}
+          name={['app', 'dresscode']}
+          label={<FormattedMessage id="common.Invitation Wording" />}
+          extra={
+            <>
+              <span>
+                <FormattedMessage id="common.Available Variables" />{' '}
+              </span>
+              {variables?.map?.((variable) => (
+                <Tag key={variable} color="blue">
+                  {variable}
+                </Tag>
+              ))}
+            </>
+          }
+        >
+          <Input.TextArea allowClear rows={7} />
         </Form.Item>
       </>
     ),

@@ -58,12 +58,18 @@ export const useDrawerSetupController = ({ setupWizards }) => {
     onSuccess: () => setOpen(false),
   });
 
+  const { data: _variables, loading: loadingVariables } = useRequest(fetch.getSetting, {
+    defaultParams: [{ name: 'variables' }],
+  });
+
   const { language } = app || {};
   const items = useCreation(() => {
     const items = setupWizards?.map?.(({ name }) => ({ title: name?.[language] }));
     items?.push({ title: <FormattedMessage id="signIn.Finish Setup" /> });
     return items;
   }, [JSON.stringify(setupWizards), language]);
+
+  const variables = useCreation(() => _variables?.result?.value?.split?.(','), [_variables]);
 
   const onFinish = useMemoizedFn((values) => {
     const isLastStep = step === setupWizards?.length;
@@ -73,5 +79,17 @@ export const useDrawerSetupController = ({ setupWizards }) => {
 
   const onFinishFailed = useMemoizedFn(() => setStep(0));
 
-  return { open, items, step, setStep, onOpen, onClose, onFinish, onFinishFailed, loadingPostSetupWizard };
+  return {
+    open,
+    items,
+    step,
+    setStep,
+    onOpen,
+    onClose,
+    onFinish,
+    onFinishFailed,
+    loadingPostSetupWizard,
+    variables,
+    loadingVariables,
+  };
 };
